@@ -3,9 +3,9 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    no-reply_email: 'no-reply@conversion.com'
-    master_email: 'master@conversion.com'
-    support_email: 'support@conversion.com'
+    no-reply_email: 'no-reply@exchange-symfony.picassohouessou.com'
+    master_email: 'master@exchange-symfony.picassohouessou.com'
+    support_email: 'support@exchange-symfony.picassohouessou.com'
     contact: ''
     #knp_paginator.template.pagination: 'appbundle/bootstrap_v4_filtration.html.twig'
 
@@ -40,21 +40,11 @@ services:
     # I use this When I write my own twig extension
     Symfony\Bridge\Twig\Extension\AssetExtension: '@twig.extension.assets'
 
-    App\EventSubscriber\ImageCacheSubscriber:
-        tags:
-            name: doctrine.event_subscriber
+
 
 #    App\EventSubscriber\OnlineSubscriber:
 #        tags:
 #            - { name: kernel.event_listener, event: kernel.terminate }
-
-
-    #App\EventSubscriber\SummaryMailSubscriber:
-    #    arguments: ['@mailer']
-
-    #App\Security\AdminResetPasswordHelper: '@symfonycasts.reset_password.token_generator'
-    #SymfonyCasts\Bundle\ResetPassword\Generator\ResetPasswordTokenGenerator: '@symfonycasts.reset_password.token_generator'
-    #SymfonyCasts\Bundle\ResetPassword\Util\ResetPasswordCleaner: '@symfonycasts.reset_password.cleaner'
 
 
     # add more service definitions when explicit configuration is needed

@@ -4,17 +4,17 @@
     <!-- Mobile Specific Meta -->
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Favicon-->
-    <link rel="shortcut icon" href="{{ absolute_url(asset('img/fav.png')) }}">
+    {# <link rel="shortcut icon" href="{{ absolute_url(asset('img/fav.png')) }}"> #}
     <!-- Author Meta -->
-    <meta name="author" content="codepixer">
+    <meta name="author" content="Picasso Houessou">
     <!-- Meta Description -->
-    <meta name="description" content="">
+    <meta name="description" content="Echanger facilement des devises sur notre plateforme">
     <!-- Meta Keyword -->
-    <meta name="keywords" content="">
+    <meta name="keywords" content="devise, échange, monnaie, conversion">
     <!-- meta character set -->
     <meta charset="UTF-8">
     <!-- Site Title -->
-    <title>Bitcoin</title>
+    <title>{% block title %} Conversion {% endblock %}</title>
 
     <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
     <!--
@@ -33,53 +33,57 @@
 </head>
 <body>
 {% for message in app.flashes('success') %}
-<div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
-</div>
 {% endfor %}
 {% for message in app.flashes('error') %}
-<div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
-    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-        {{ message }}
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
+    <div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
     </div>
-</div>
 {% endfor %}
 
 {% block header %}
-<header id="header" >
-    <div class="container">
-        <div class="row align-items-center justify-content-between d-flex">
-            <div id="logo">
-                <a href="{{ absolute_url(path('app_home')) }}">{#<img src="{{ absolute_url(asset('assets/img/logo.png')) }}" alt="" title="" />#}  <span class="text-white text-uppercase text-bold" style="font-weight: bold;">Conversion</span></a>
+    <header id="header">
+        <div class="container">
+            <div class="row align-items-center justify-content-between d-flex">
+                <div id="logo">
+                    <a href="{{ absolute_url(path('app_home')) }}">{# <img src="{{ absolute_url(asset('assets/img/logo.png')) }}" alt="" title="" /> #}
+                        <span class="text-white text-uppercase text-bold"
+                              style="font-weight: bold;">Conversion</span></a>
+                </div>
+                <nav id="nav-menu-container">
+                    <ul class="nav-menu">
+                        <li class="menu-active"><a href="{{ absolute_url(path('app_home')) }}">Accueil</a></li>
+                        <li class="menu-active"><a
+                                    href="{{ absolute_url(path('app_home', {'_fragment': 'convert'})) }}">Conversion</a>
+                        </li>
+                        <li>
+                            <a href="{{ absolute_url(path('app_home', {'_fragment': 'feature'} ) ) }}">Fonctionnalité</a>
+                        </li>
+                        <li><a href="{{ absolute_url(path('app_home', {'_fragment': 'price'})) }}">Prix</a></li>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <li><a href="{{ absolute_url(path('app_admin')) }}">Administration</a></li>
+                            <li><a href="{{ absolute_url(path('app_logout')) }}">Se Déconnecter</a></li>
+                        {% else %}
+                                <li><a href="{{ absolute_url(path('app_admin_login')) }}">Se Connecter</a></li>
+                        {% endif %}
+
+                    </ul>
+                </nav><!-- #nav-menu-container -->
             </div>
-            <nav id="nav-menu-container">
-                <ul class="nav-menu">
-                    <li class="menu-active"><a href="{{ absolute_url(path('app_home')) }}">Accueil</a></li>
-                    <li><a href="
-                    <li class="menu-active"><a href="{{ absolute_url(path('app_home', {'_fragment': 'convert'})) }}">Conversion</a></li>
-                    <li><a href="{{ absolute_url(path('app_home', {'_fragment': 'feature'} ) )}}">Fonctionnalité</a></li>
-                    <li><a href="{{ absolute_url(path('app_home', {'_fragment': 'price'})) }}">Price</a></li>
-                    {#
-                    <li class="menu-has-children"><a href="">Pages</a>
-                        <ul>
-                            <li><a href="generic.html">Generic</a></li>
-                            <li><a href="elements.html">Elements</a></li>
-                        </ul>
-                    </li>
-                    #}
-                </ul>
-            </nav><!-- #nav-menu-container -->
         </div>
-    </div>
-</header><!-- #header -->
+    </header><!-- #header -->
 {% endblock %}
 
 {% block body %}
@@ -99,26 +103,45 @@
                         </p>
                     </div>
                 </div>
-                {#
+
                 <div class="col-lg-6  col-md-6 col-sm-6 offset-2">
                     <div class="single-footer-widget">
                         <h4 class="text-white">Newsletter</h4>
                         <p>Abonnez vous pour etre au courant des dernières news</p>
                         <div class="d-flex flex-row" id="mc_embed_signup">
-                            {{ render ( path('app_embed_newsletters_add') ) }}
+
+                            <form class="navbar-form" novalidate="novalidate"
+                                  action="{{ absolute_url(path('app_embed_newsletters_add')) }}" method="post">
+                                <div class="input-group add-on">
+                                    <input class="form-control" name="email" placeholder="Email address"
+                                           onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'"
+                                           required="" type="email">
+
+                                    <div class="input-group-btn">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('_token') }}">
+                                        <button class="genric-btn" type="submit"><span
+                                                    class="lnr lnr-arrow-right"></span></button>
+                                    </div>
+                                </div>
+                                <div class="info mt-20"></div>
+                            </form>
+                            {# {{ render ( path('app_embed_newsletters_add') ) }} #}
                         </div>
                     </div>
                 </div>
-        #}
+
             </div>
             <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
                 <p class="footer-text m-0">
-                    Copyright &copy; {{ 'now' |date('Y') }} All rights reserved <a href="mailto:houessoupicasso@yahoo.fr">Picasso Houessou</a>
+                    Copyright &copy; {{ 'now' |date('Y') }} All rights reserved <a
+                            href="http://picassohouessou.com" target="_blank">Picasso Houessou</a>
 
                 </p>
                 <div class="footer-social d-flex align-items-center">
-                    <a href="#"><i class="fa fa-facebook"></i></a>
-                    <a href="#"><i class="fa fa-twitter"></i></a>
+                    <a href="https://www.facebook.com/picasso.houessou.5" target="_blank"><i class="fa fa-facebook"></i></a>
+                    <a href="https://www.linkedin.com/in/picasso-houessou-b9461117a/" target="_blank"><i
+                                class="fa fa-linkedin"></i></a>
+                    <a href="https://github.com/PicassoHouessou"><i class="fa fa-github"></i></a>
                 </div>
             </div>
         </div>
@@ -127,7 +150,7 @@
 {% endblock %}
 
 <script src="{{ absolute_url(asset('assets/js/vendor/jquery-2.2.4.min.js')) }}"></script>
-<script src="{{ absolute_url(asset('assets/js/popper.min.js')) }}" ></script>
+<script src="{{ absolute_url(asset('assets/js/popper.min.js')) }}"></script>
 <script src="{{ absolute_url(asset('assets/js/vendor/bootstrap.min.js')) }}"></script>
 <script src="{{ absolute_url(asset('assets/js/easing.min.js')) }}"></script>
 <script src="{{ absolute_url(asset('assets/js/hoverIntent.js')) }}"></script>

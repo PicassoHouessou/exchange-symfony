@@ -39,5 +39,7 @@ yarn-error.log
 *.gz
 /*.phar
 *.lock
+/.idea/
+/.vscode/
 ### My Personnal library vendors ###
 

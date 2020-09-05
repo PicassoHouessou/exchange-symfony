@@ -4,7 +4,6 @@ namespace App\Controller\Admin;
 
 use App\Repository\NewslettersRepository;
 use App\Repository\UserRepository;
-use Doctrine\Persistence\ObjectManager;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;

@@ -2,132 +2,86 @@
 
 namespace App\EventSubscriber;
 
-use App\Event\ContactUsEvent;
+
 use App\Event\NewslettersEvent;
 use App\Event\UserEvent;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mailer\Transport;
-use Symfony\Component\Mime\Email;
 use Symfony\Contracts\EventDispatcher\Event;
 use Twig\Environment;
 
 class SummaryMailSubscriber implements EventSubscriberInterface
 {
-    protected $mailer ;
-    protected $sender ;
-    protected $swiftMailer ;
-    protected $twig ;
+    protected $mailer;
+    protected $sender;
+    protected $twig;
     protected $supportEmail;
 
-    public function __construct( MailerInterface $mailer, \Swift_Mailer $swiftMailer,  $noreplyEmail, $supportEmail, Environment $twig)
+    public function __construct(MailerInterface $mailer, $noreplyEmail, $supportEmail, Environment $twig)
     {
-        $this->mailer = $mailer ;
-        $this->sender = $noreplyEmail ;
-        $this->swiftMailer= $swiftMailer ;
-        $this->twig = $twig ;
+        $this->mailer = $mailer;
+        $this->sender = $noreplyEmail;
+        $this->twig = $twig;
         $this->supportEmail = $supportEmail;
     }
 
-    public function onNewsletterAdd(NewslettersEvent $event )
+    public function onNewsletterAdd(NewslettersEvent $event)
     {
-//        $email = (new TemplatedEmail())
-//            ->from($this->sender)
-//            ->to($event->getNewsletters()->getEmail())
-//            ->subject('Newsletters registration success')
-//
-//            // path of the Twig template to render
-//            ->htmlTemplate('default/newsletters_register_email.html.twig')
-//        ;
-//
-//        $this->mailer->send($email);
 
+        $email = (new TemplatedEmail())
+            ->from($this->sender)
+            ->to($event->getNewsletters()->getEmail())
+            ->subject('Newsletters registration success')
 
-        $message = (new \Swift_Message('Newsletters registration success'))
-            ->setFrom($this->sender)
-            ->setTo($event->getNewsletters()->getEmail())
-            ->setBody(
-                $this->twig->render(
-                // templates/emails/registration.html.twig
-                    'default/newsletters_register_email.html.twig'
-                ),
-                'text/html'
-            )
-        ;
+            // path of the Twig template to render
+            ->htmlTemplate('default/newsletters_register_email.html.twig');
+        $this->mailer->send($email);
 
-        $this->swiftMailer->send($message);
 
     }
 
     public function onUserAdd(UserEvent $event)
     {
 
-//        $email = (new TemplatedEmail())
-//            ->from($this->sender)
-//            ->to($event->getUser()->getEmail())
-//            ->subject('Your verification code')
-//
-//            // path of the Twig template to render
-//            ->htmlTemplate('registration/confirmation_email.html.twig')
-//
-//            // pass variables (name => value) to the template
-//            ->context([
-//                'expiration_date' => new \DateTime('+7 days'),
-//                'activationCode' => 'foo',
-//            ])
-//        ;
-//        $this->mailer->send($email);
+        $email = (new TemplatedEmail())
+            ->from($this->sender)
+            ->to($event->getUser()->getEmail())
+            ->subject('Your verification code')
 
-        $message = (new \Swift_Message('Your verification code'))
-            ->setFrom($this->sender)
-            ->setTo($event->getUser()->getEmail())
-            ->setBody(
-                $this->twig->render(
-                // templates/emails/registration.html.twig
-                    'registration/confirmation_email.html.twig',
-                    [
-                        'expiration_date' => new \DateTime('+7 days'),
-                        'activationCode' => 'foo'
-                    ]
-                ),
-                'text/html'
-            )
-        ;
+            // path of the Twig template to render
+            ->htmlTemplate('registration/confirmation_email.html.twig')
 
-        $this->swiftMailer->send($message);
-
+            // pass variables (name => value) to the template
+            ->context([
+                'expiration_date' => new \DateTime('+7 days'),
+                'activationCode' => 'foo',
+            ]);
+        $this->mailer->send($email);
     }
-    public function onContactUsSend(ContactUsEvent $event)
-    {
-        if ( ! $event instanceof ContactUsEvent) {
-            return ;
-        }
-        $contactUs = $event->getContactUs() ;
-        $message = (new \Swift_Message('You got message'))
-            ->setFrom($this->sender)
-            ->setTo($this->supportEmail)
-            ->setBody(
-                $this->twig->render(
-                // templates/emails/registration.html.twig
-                    'emails/contact_us.html.twig',
-                    [
-                        'contactUs' => $contactUs
-                    ]
-                ),
-                'text/html'
-            )
-        ;
 
-        $this->swiftMailer->send($message);
-
-    }
 
     public function onConversionDo(Event $event)
     {
-        if ( ! $event instanceof ConversionEvent) {
-            return ;
+        if (!$event instanceof ConversionEvent) {
+            return;
         }
+        $conversion = $event->getConversion();
+        $email =
+            (new TemplatedEmail())
+                ->from($this->sender)
+                ->to($conversion->getEmail())
+                ->subject("Demande d'échange de devises")
+
+                // path of the Twig template to render
+                ->htmlTemplate('emails/conversion.html.twig')
+                // pass variables (name => value) to the template
+                ->context([
+                    'conversion' => $conversion
+                ]);
+        $this->mailer->send($email);
+
+        /*
         $conversion = $event->getConversion() ;
         $message = (new \Swift_Message(" Demande d'échange de devises"))
             ->setFrom($this->sender)
@@ -145,9 +99,8 @@ class SummaryMailSubscriber implements EventSubscriberInterface
         ;
 
         $this->swiftMailer->send($message);
-
+*/
     }
-
 
 
     public static function getSubscribedEvents()
@@ -155,10 +108,9 @@ class SummaryMailSubscriber implements EventSubscriberInterface
         // TODO: Implement getSubscribedEvents() method.
         return [
             //UserEvent::NEW_USER                 => 'onUserAdd',
-            NewslettersEvent::NEWSLETTERS_ADD   => 'onNewsletterAdd',
-            ContactUsEvent::SEND                => 'onContactUsSend',
+            NewslettersEvent::NEWSLETTERS_ADD => 'onNewsletterAdd',
             ConversionEvent::CONVERSION_REQUEST => 'onConversionDo',
 
-        ] ;
+        ];
     }
 }

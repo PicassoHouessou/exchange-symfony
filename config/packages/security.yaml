@@ -27,7 +27,7 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         admin:
-            pattern: ^/admin|/admin/|login/admin
+            pattern: ^/
             anonymous: true
             lazy: true
             provider: app_admin_provider
@@ -43,41 +43,11 @@ security:
                 secure: true
                 name: ADMINREMEMBERME
                 remember_me_parameter: '_admin_remember_me'
-        main:
-            pattern: ^/
-            anonymous: true
-            lazy: true
-            provider: app_user_provider
-            guard:
-                authenticators:
-                    - App\Security\LoginFormAuthenticator
-            logout:
-                path: app_logout
-                # where to redirect after logout
-                # target: app_any_route
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path: /
-                secure: true
-                remember_me_parameter: '_remember_me'
-                # by default, the feature is enabled by checking a
-                # checkbox in the login form (see below), uncomment the
-                # following line to always enable it.
-                #always_remember_me: true
-
-            # activate different ways to authenticate
-            # https://symfony.com/doc/current/security.html#firewalls-authentication
-
-            # https://symfony.com/doc/current/security/impersonating_user.html
-            # switch_user: true
 
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/login/admin, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/login/user, roles: IS_AUTHENTICATED_ANONYMOUSLY}
-        - { path: ^/login, roles: IS_AUTHENTICATED_ANONYMOUSLY}
         - { path: /admin, roles: ROLE_ADMIN }
         - { path: /admin/, roles: ROLE_ADMIN }
         - { path: ^/admin, roles: ROLE_ADMIN }

@@ -2,15 +2,10 @@
 
 namespace App\Controller;
 
-use App\Entity\ContactUs;
 use App\Entity\Conversion;
 use App\Entity\Newsletters;
-use App\Event\ContactUsEvent;
-use App\Event\NewslettersEvent;
 use App\EventSubscriber\ConversionEvent;
-use App\Form\ContactUsType;
 use App\Form\ConversionType;
-use App\Form\NewslettersRegisterType;
 use App\Form\NewslettersType;
 use App\Repository\CurrencyRepository;
 use Doctrine\Persistence\ObjectManager;
@@ -77,11 +72,12 @@ class DefaultController extends AbstractController
     {
         $newsletter = new Newsletters() ;
 
-        $form = $this->get('form.factory')->createNamed('', NewslettersType::class) ;
+        $form = $this->get('form.factory')->createNamed('', NewslettersType::class, $newsletter) ;
 
         $form->handleRequest($request) ;
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $newsletter->setCreatedAt(new \Datetime()) ;
             $manager = $this->getDoctrine()->getManager() ;
             $manager->persist($newsletter);
             $manager->flush();
@@ -96,6 +92,8 @@ class DefaultController extends AbstractController
             return $this->redirectToRoute('app_home') ;
 
         }
+
+        return  $this->redirectToRoute('app_home') ;
 
         return  $this->render('default/_embed_newsletter.html.twig',[
                 'newsletterForm'              => $form->createView(),

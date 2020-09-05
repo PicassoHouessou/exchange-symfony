@@ -73,7 +73,7 @@ class Currency
         return $this->code;
     }
 
-    public function setcode(?string $code): self
+    public function setCode(?string $code): self
     {
         $this->code = $code;
 

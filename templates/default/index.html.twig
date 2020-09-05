@@ -55,7 +55,7 @@
                             </select>
                         </div>
 
-                        <input type="text" name="poundFrom" id="poundFrom" placeholder="pounds" @input.prevent="convertTo"
+                        <input type="text" name="poundFrom" id="poundFrom" placeholder="pounds" @input.prevent="convertTo" ref="poundFrom"
                                v-model.number="form.from.value" class="form-control" :class="{'input-error' : form.from.error === true } ">
                         <span class="reserve" v-if="reserveFrom">
                             max : ${ reserveFrom }$
@@ -64,17 +64,17 @@
 
                     <div class="col-lg-3 cols ">
                         <div class="col-lg-8 offset-lg-2 pt-2 mt-2" style="text-align: center;">
-                            <h1 class="text-white">To</h1>
+                            <h1 class="text-white">En</h1>
                         </div>
                     </div>
 
                     <div class="col-lg-3 cols">
-                        <select name="currency" class="form-select nice-select mb-20" id="currencyTo"  @change.prevent="convertFrom">
+                        <select name="currency" class="form-select nice-select mb-20" id="currencyTo"  @change.prevent="selectConvertFrom">
 
                             <option v-for="field in currency" :value="field.code">${ field.label }$</option>
                         </select>
                         <input type="text" name="poundTo" id="poundTo" placeholder="pounds" class="form-control "
-                               v-model.number="form.to.value" @input="convertFrom" :class="{'input-error' : form.to.error } ">
+                               v-model.number="form.to.value" @input="convertFrom" :class="{'input-error' : form.to.error } " ref="poundTo">
                         <span class="reserve" v-if="reserveTo">
                             max: ${  reserveTo }$
                         </span>
@@ -269,6 +269,7 @@
                     value = parseFloat(value);
                     if (Number.isNaN(value)) {
                         this.form.to.value = '';
+                        this.form.from.value = '';
                         return '';
                     }
                     let currencyFrom = document.getElementById('currencyFrom');
@@ -311,6 +312,7 @@
                     value = parseFloat(value);
                     if (Number.isNaN(value)) {
                         this.form.to.value = '';
+                        this.form.from.value = '';
                         return '';
                     }
                     let currencyFrom = document.getElementById('currencyFrom');
@@ -351,7 +353,6 @@
                         })
                         .catch(error => {
                             console.log(error)
-
                         });
                 },
                 submit(event) {
@@ -375,6 +376,10 @@
                         return false;
                     }
 
+                    if (this.form.from.value ==="" || this.form.from.value === ""){
+                        return false;
+                    }
+
                     if ( elementFrom.reserve < this.form.from.value ) {
                         this.form.from.error = true ;
                     }
@@ -393,11 +398,15 @@
 
                     return true ;
                 },
+                selectConvertFrom()
+                {
+                    let poundTo = this.$refs.poundTo ;
+                    poundTo.dispatchEvent(new Event('input', {bubbles:true}))
+                },
                 selectConvertTo()
                 {
-                    //let poundFrom = document.getElementById('poundFrom') ;
-
-
+                    let  poundFrom = this.$refs.poundFrom ;
+                    poundFrom.dispatchEvent(new Event('input', {bubbles:true}))
                 }
             }
         })

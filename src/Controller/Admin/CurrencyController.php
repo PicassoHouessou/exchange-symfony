@@ -113,13 +113,13 @@ class CurrencyController extends AbstractController
         $manager->remove($currency) ;
         $manager->flush();
 
-        $this->addFlash('success', "La devise". $currency->getCode() . " a été supprimé");
+        $this->addFlash('success', "La devise ". $currency->getCode() . " a été supprimé");
 
         return $this->redirectToRoute('app_admin') ;
     }
 
     /**
-     * @Route("/admin/echanges", name="app_admin_conversion_all")
+     * @Route("/admin/exchange", name="app_admin_conversion_all")
      */
 
     public function conversion(Request $request , ConversionRepository $conversionRepository, PaginatorInterface $paginator)
