@@ -1,0 +1,62 @@
+{% extends 'admin/base_no_footer.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% form_theme resetForm 'bootstrap_4_layout.html.twig'  %}
+
+{% block stylesheets %}
+{% endblock %}
+
+{% block body %}
+    <div class="login-box">
+        <div class="login-logo">
+            <a href=""><b>Admin</b>DMV</a>
+        </div>
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
+                <p class="login-box-msg">You are only one step a way from your new password, recover your password now.</p>
+
+                <form action="" method="post" novalidate="novalidate">
+
+                    <div class="input-group mb-3">
+                        {{ form_widget(resetForm.plainPassword) }}
+                        {{ form_errors(resetForm.plainPassword) }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="input-group mb-3">
+                        {{ form_widget(resetForm.confirmPlainPassword) }}
+                        {{ form_errors(resetForm.confirmPlainPassword) }}
+                        <div class="input-group-append">
+                            <div class="input-group-text">
+                                <span class="fas fa-lock"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12">
+                            {{ form_rest(resetForm) }}
+                            <button type="submit" class="btn btn-primary btn-block">Change password</button>
+                        </div>
+                        <!-- /.col -->
+                    </div>
+                </form>
+
+                <p class="mt-3 mb-1">
+                    <a href="{{ absolute_url(path('app_admin_login')) }}">Login</a>
+                </p>
+            </div>
+            <!-- /.login-card-body -->
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+{% endblock %}
+
+
+
+

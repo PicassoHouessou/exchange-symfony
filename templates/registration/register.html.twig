@@ -1,0 +1,239 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Register{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p-tb-60 border-bottom">
+        <div class="col-lg-12">
+            <h2 class="f1-l-5 txt-center cl2 p-b-10">
+                Créez votre compte DMV
+            </h2>
+
+            <p class="text-center f1-s-12">
+                Déjà inscrit ? &nbsp;
+                <a href="{{ absolute_url(path('app_login')) }}" class="btn btn-sm btn-outline-secondary btn-flat" rel="nofollow">Connectez-vous <i class="fa fa-arrow-right"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <section class="bg0 p-tb-120" id="registration">
+        <div class="" v-if="successFlash===true" style="display: block; position: fixed; left: 5px; top: 100px; z-index: 111;">
+            <div class="alert alert-success text-light bg-success" role="alert" style="max-width: 800px; border: none;" >
+                <strong>${ messageFlash }$  </strong>  &nbsp;&nbsp;
+                <button type="button" class="close">
+                    <span id="closeAlert" aria-hidden="true" @click="successFlash=false">&times;</span>
+                </button>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-sm-12 col-md-10 col-lg-7 p-b-80">
+                    {% for message in app.flashes('verify_email_error') %}
+                        <div class="p-r-10 p-r-0-sr991 f1-s-12 m-b-20">
+                            <h2 class="alert alert-success">
+                                <span class="">{{ message }} </span>
+                            </h2>
+                        </div>
+                    {% endfor %}
+
+                    <div class="p-r-10 p-r-0-sr991">
+                        <validation-observer v-slot="{ invalid, handleSubmit, reset }" ref="form">
+                        <form method="post" action="" novalidate="novalidate" id="registrationForm"  class="vld-parent" @submit.prevent="handleSubmit(submit)" @reset.prevent="reset" >
+                            <loading :active.sync="loader.isLoading"
+                                     :can-cancel="loader.canCancel"
+                                     :on-cancel="onCancel"
+                                     :loader="loader.loader"
+                                     :color="loader.color"
+                                     :height="loader.height"
+                                     :width="loader.width"
+                                     :transition="loader.transition"
+                                     :is-full-page="loader.fullPage"></loading>
+
+                                <div class="form-row">
+                                    <div class="col-4">
+                                        <label class="m-b-20" for="gender"><b>Identité *</b></label>
+                                        <select class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20 custom-select" id="gender" name="gender">
+                                            <option value="M" selected>Monsieur</option>
+                                            <option value="F">Madame</option>
+                                        </select>
+                                        {{ form_errors(registrationForm.gender) }}
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+
+                                    <div class="col-6">
+                                        <validation-provider name="last name" rules="required|max:200" v-slot="{ errors }">
+                                            <input type="text" name="lastName" v-model="form.lastName" class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" placeholder="Nom *"  :class="{'input-error': errors[0] }" >
+                                            <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.lastName) }}
+                                        </validation-provider>
+
+                                    </div>
+
+
+
+                                    <div class="col-6">
+                                        <validation-provider name="first name" rules="required|max:200" v-slot="{ errors }">
+                                            <input type="text" name="firstName" v-model="form.firstName" class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" placeholder="Prénoms *"  :class="{'input-error': errors[0] }" >
+                                            <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.firstName) }}
+                                        </validation-provider>
+                                    </div>
+
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <validation-provider name="email" rules="email|required" v-slot="{ errors }">
+                                            <label class="m-b-20" for="inlineFormInput"><b>Email *</b></label>
+                                            <input type="text" name="email" v-model="form.email" class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" placeholder="Email *"  :class="{'input-error': errors[0] }" >
+                                            <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.email) }}
+                                        </validation-provider>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <validation-provider name="password" rules="required|max:20|min:8|appPassword" v-slot="{ errors }" vid="confirmationPassword">
+                                            <label class="m-b-20" for="inlineFormInput"><b>Mot de passe *</b></label>
+                                            <input type="password" name="plainPassword" v-model="form.plainPassword" class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" placeholder="Password *"  :class="{'input-error': errors[0] }" >
+                                            <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+
+                                            {{ form_errors(registrationForm.plainPassword) }}
+                                        </validation-provider>
+
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <validation-provider name="confirm password" rules="required|max:20|min:8|confirmed:confirmationPassword" v-slot="{ errors }" >
+                                            <label class="m-b-20" for="inlineFormInput"><b>Mot de passe *</b></label>
+                                            <input type="password" name="confirmPlainPassword" v-model="form.confirmPlainPassword" class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" placeholder="Same Password"  :class="{'input-error': errors[0] }" >
+                                            <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.confirmPlainPassword) }}
+                                        </validation-provider>
+
+                                    </div>
+                                </div>
+
+                                <hr>
+
+                                <div class="form-row">
+                                    <div class="col-12">
+                                        <div class="form-check m-b-5">
+                                            <input class="form-check-input" type="checkbox"  name="agreeNewsletters">
+                                            <label class="form-check-label" for="gridCheck">
+                                                Je souhaite être informé(e) en avant-première des caractéristiques et de l'actualité des projets proposés en financement.
+                                            </label>
+                                        </div>
+
+                                        <div class="form-check m-b-5">
+                                            <validation-provider name="agree terms" rules="required|checked" v-slot="{ errors }">
+                                            <input class="form-check-input" type="checkbox" name="agreeTerms" v-model="form.agreeTerms">
+                                            <label class="form-check-label" for="">
+                                                J'ai lu et j'accepte les <a href="">Conditions d'Utilisation</a> et la <a href="">Politique de Confidentialité *</a>
+                                            </label>
+                                                <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.agreeTerms ) }}
+                                            </validation-provider>
+                                        </div>
+
+                                        <div class="form-check m-b-5">
+                                            <validation-provider name="agree risks" rules="required|checked" v-slot="{ errors }">
+                                            <input class="form-check-input" type="checkbox" name="agreeRisks" v-model="form.agreeRisks">
+                                            <label class="form-check-label" for="gridCheck">
+                                                En cas d'investissement, j'ai conscience et j’accepte que je peux perdre la totalité de la somme investie (mais jamais plus) et que la revente de mes titres n'est pas garantie.
+                                            </label>
+                                                <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                            {{ form_errors(registrationForm.agreeRisks ) }}
+                                            </validation-provider>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <input type="hidden" name="_registration_form_token" value="{{ csrf_token('_registration_form_token') }}" >
+                                    <button type="submit" class="size-a-19 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                                        CREER MON COMPTE <i class="fa fa-chevron-right"></i>
+                                    </button>
+                                </div>
+
+                        </form>
+                        </validation-observer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block javascripts %}
+
+<script>
+    var registrationApp  = new Vue({
+        el: '#registration',
+        delimiters: ['${', '}$'],
+        data: {
+            successFlash: false,
+            messageFlash:null,
+            loader: {
+                isLoading: false,
+                canCancel: false,
+                fullpage: true,
+                color: '#17b978',
+                height: 56,
+                width: 56,
+                loader: 'spinner',
+                transition: 'loaderl'
+            },
+            form: {
+                email: '{{ user.email }}' ,
+                lastName:  '{{ user.info.lastName }}',
+                firstName: '{{ user.info.firstName }}',
+                plainPassword:'' ,
+                confirmPlainPassword:'',
+                agreeTerms:'',
+                agreeRisks:''
+            },
+        } ,
+        methods: {
+            submit(){
+                form = document.getElementById('registrationForm');
+
+                let formData = new FormData(form);
+                this.loader.isLoading = true ;
+
+                axios.post("{{ absolute_url(path('app_register')) }}",
+                    formData
+                )
+                    .then( (response) => {
+                        registrationApp.message = response.data.message ;
+                        console.log (this.message);
+                        registrationApp.closeFlash = true
+                        document.location.href = "{{ absolute_url(path('app_register_confirm')) }} ";
+                    })
+                    .catch( function(error) {
+                        registrationApp.loader.isLoading = false;
+                        registrationApp.messageFlash = error.response.data.message ;
+                        console.log (this.message);
+                        registrationApp.successFlash = true ;
+                    } ) ;
+            },
+            onCancel() {
+                console.log('User cancelled the loader.')
+            },
+            testLoader(){
+                this.loader.isLoading = true;
+                setTimeout(() => {
+                    this.loader.isLoading = false ;
+                },5000)
+            }
+        }
+    });
+
+</script>
+{% endblock %}
+

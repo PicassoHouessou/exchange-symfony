@@ -1,0 +1,52 @@
+{% if show %}
+<div class="pos-fixed op-09 borad-5 p-rl-35 p-t-28 p-b-35 m-b-55 " style="background: #dc3545; z-index: 99999; bottom: 0; right: 35px; width: 350px; border: 2px solid #FFF;" id="closeCookie">
+    <h5 class="f1-m-5 cl0 p-b-10">
+        Cookies
+    </h5>
+
+    <p class="f1-s-1 cl0 p-b-25">
+        DMVIG utilise des cookies pour vous offrir le meilleur service. En poursuivant votre navigation sur ce site, vous acceptez l'utilisation de cookies.
+    </p>
+
+    <p class="flex-e-c">
+        <a href="{{ absolute_url(url('app_embed_accept_cookies', {'acceptCookie': true} )) }}" class="cl0 f1-m-12" id="acceptCookiesSelector">
+            OK
+        </a>
+    </p>
+    <script type="text/javascript">
+         window.addEventListener('load', ()=>{
+             let acceptCookies = document.getElementById('acceptCookiesSelector') ;
+
+             let closeCookie = document.getElementById('closeCookie' );
+
+             acceptCookies.addEventListener('click', function (e) {
+                 e.preventDefault() ;
+
+                 closeCookie.className = closeCookie.className + ' d-none' ;
+
+                 let xhr = new XMLHttpRequest();
+                 xhr.timeout = 20000 ;
+
+                 xhr.open('GET', this.getAttribute('href')) ;
+
+                 xhr.send();
+
+                 xhr.addEventListener('readystatechange', function () {
+                     if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200)
+                     {
+                         let lastClass =  closeCookie.className ;
+                         closeCookie.className = lastClass + ' d-none' ;
+
+                         console.log(JSON.parse(xhr.responseText)) ;
+                     }
+                 }) ;
+             }) ;
+         });
+
+
+
+
+    </script>
+</div>
+
+{% endif %}

@@ -1,0 +1,325 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">All users datas</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">All Users</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <div id="appUsers">
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card" style="overflow: auto;">
+                            <div class="card-header">
+                                <h3 class="card-title">{% if users %} Tous les utilisateurs activés  {% else %} Aucun utilisateur activé {% endif %}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="usersData" class="table table-bordered table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Type</th>
+                                        <th>First name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Number</th>
+                                        <th>Country</th>
+                                        <th>Town</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for key,  user in users %}
+
+                                        <tr >
+                                            <td>{{ key + 1  }}</td>
+                                            {% if user.info %}
+                                                <td><span class="badge badge-warning">{{ user.info.mainActivity }}</span></td>
+                                                <td>{{ user.info.firstName }}</td>
+                                                <td>{{ user.info.LastName }}</td>
+                                                <td>{{ user.email }}</td>
+                                                <td>{{ user.info.phoneNumber }}</td>
+                                                <td>{{ user.info.country }}</td>
+                                                <td>{{ user.info.city }}</td>
+                                            {% else %}
+                                                <td><span class="badge badge-warning">Undefined</span></td>
+                                                <td> Undefined</td>
+                                                <td> Undefined</td>
+                                                <td>Undefined</td>
+                                                <td>Undefined</td>
+                                                <td>Undefined</td>
+                                                <td>Undefined</td>
+                                            {% endif %}
+                                            <td>
+                                                <button type="button" id="{{ user.id }}" class="btn btn-primary my-1 d-inline-flex btn-sm modal-button detailsButton" style="cursor:pointer;" ><i class="fa fa-eye"></i></button>
+                                                <a href="{{ absolute_url(url('app_admin_user_delete', {'id': user.id})) }}" class="confirmRemoveButton"><button type="button" class="btn btn-danger btn-sm my-1 d-inline-flex"><i class="fa fa-trash"></i></button></a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Type</th>
+                                        <th>First name</th>
+                                        <th>Last Name</th>
+                                        <th>Email</th>
+                                        <th>Number</th>
+                                        <th>Country</th>
+                                        <th>Town</th>
+                                        <th>Profession</th>
+                                        <th>Action</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+
+            </section>
+            <!-- /.content -->
+
+            <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="userContent" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="userContent"><b id="fullName"></b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto">
+                                        <div class="text-center">
+                                            <img class="profile-user-img img-fluid img-rounded" src="{{  asset('admin/dist/img/default-150x150.png' ) }}" alt="Profile picture" id="userAvatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 border-left mr-auto text-left">
+                                        <ul class="p-0 m-0" style="list-style: none;">
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                Member since <span class="text-muted" id="createdAt">user.createdAt </span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil has <span class="text-muted">no activity</span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil <span class="text-muted" id="isComplete"> complete</span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil is <span class="text-success" id="isEnabled">Active</span>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="" method="post">
+                                <span>Change account status</span>
+                                <div class="custom-control custom-switch d-inline-block" id="accountStatusParent">
+                                    <input type="checkbox" class="custom-control-input " id="accountStatus" >
+                                    <label class="custom-control-label" for="accountStatus"></label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="confirmRemoveModal" tabindex="-1" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Are you sure to delete this user ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">No</button>
+                            <button type="button" href="" id="confirmRemoveModalButton" class="btn btn-primary">Yes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ./wrapper -->
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        $(function () {
+            $("#usersData").DataTable({
+
+                "paging": true,
+                "lengthChange": true,
+                "searching": true,
+                "ordering": true,
+                "info": true,
+                "autoWidth": true,
+            });
+        });
+        $('#oneU').popover('enable')
+    </script>
+    <script>
+        $(function () {
+            var confirmRemoveButton = $('.confirmRemoveButton');
+            var confirmRemoveModalButton = $('#confirmRemoveModalButton');
+            var detailsButton = $('.detailsButton') ;
+
+            var confirmRemoveModal = $('#confirmRemoveModal') ;
+            var detailsModal = $('#detailsModal');
+            var fullName = $('#fullName') ;
+            var createdAt = $('#createdAt') ;
+            var isComplete = $('#isComplete')  ;
+            var isEnabled = $('#isEnabled') ;
+            var userAvatar =  $('#userAvatar') ;
+            var accountStatus = $('#accountStatus') ;
+            var id = null ;
+            var removeURI = null;
+
+            detailsButton.on('click', function(e){
+                console.log("ca marche") ;
+                e.preventDefault() ;
+                id = $(this).attr('id') ;
+                axios.get('{{ absolute_url(path("app_admin_user_info_ajax")) }}', {
+                    params: {
+                        id: id
+                    }
+                })
+                    .then(function (response) {
+
+                        //app.messageFlash = response.data.message ;
+                        //app.successFlash = true;
+                        fullName.text( response.data.fullName ) ;
+                        createdAt.text( response.data.createdAt ) ;
+
+                        if (response.data.isComplete === true){
+                            isComplete.text( " completed" );
+                        }else {
+                            isComplete.text( " not completed" );
+
+                        }
+                        if (response.data.isEnabled === true)
+                        {
+                            isEnabled.text(" is enabled") ;
+                            accountStatus.prop("checked", true) ;
+                        }else {
+                            isEnabled.text(" is disabled" ) ;
+                            accountStatus.prop("checked", false) ;
+                        }
+
+                        if (response.data.userAvatar === null)
+                        {
+                            userAvatar.attr({
+                                'src' : '/admin/dist/img/default-150x150.png'
+                            }) ;
+
+                        } else {
+                            userAvatar.attr({
+                                'src' : response.data.userAvatar
+                            }) ;
+
+                        }
+
+                        detailsModal.modal('show') ;
+
+                    }).catch(function (error) {
+                    //app.isLoading = false;
+                    alert(error);
+
+                    //appNewslettersRegister.messageFlash = response.data.message ;
+                });
+
+            });
+
+            confirmRemoveButton.on('click', function (e) {
+                e.preventDefault() ;
+                removeURI = $(this).attr('href');
+
+                confirmRemoveModal.modal('show');
+            });
+
+            confirmRemoveModalButton.on('click', function (e) {
+                e.preventDefault();
+                confirmRemoveModal.modal('hide') ;
+
+                document.location.href = removeURI ;
+
+            }) ;
+
+            /* Pour la gestion du status */
+
+            accountStatus.on('click', function (e) {
+                axios.get('{{ absolute_url(path("app_admin_user_disable_ajax")) }}', {
+                    params: {
+                        id: id
+                    }
+                })
+                    .then(function (response) {
+                        if (response.data.isEnabled === true)
+                        {
+                            isEnabled.text(" is enabled") ;
+                            accountStatus.prop("checked", true) ;
+                        }else {
+
+                            isEnabled.text(" is disabled" ) ;
+                            accountStatus.prop("checked", false) ;
+                            //var parent = detailsButton.parents("tr") ;
+                            //console.log(parent.html()) ;
+                            //parent.detach();
+                        }
+                    }).catch(function (error) {
+                    alert(error);
+
+                    //appNewslettersRegister.messageFlash = response.data.message ;
+                });
+
+            }) ;
+
+
+    </script>
+{% endblock %}
+

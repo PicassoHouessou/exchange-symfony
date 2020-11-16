@@ -1,0 +1,228 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Register Complete information {% endblock %}
+
+{% block body %}
+    <div class="container-fluid p-tb-20 bg-img3 how1 pos-relative">
+        <div class="col-lg-12">
+
+            <h1 class="f1-l-5 txt-center cl4 p-b-0">
+                Devenez membre
+            </h1>
+
+        </div>
+    </div>
+
+    <section class="container-fluid bg0 p-rl-0 p-b-55" id="stepAccountApp">
+
+        {#<div class="" id="successFlash" v-if="successFlash===true" style="display: block; position: fixed; left: 5px; top: 100px; z-index: 111;">
+            <div class="alert alert-success text-light bg-success" role="alert" style="max-width: 800px; border: none;" >
+                <strong>Super ! ${ messageFlash }$  </strong>  &nbsp;&nbsp;
+                <button type="button" class="close">
+                    <span id="closeAlert" aria-hidden="true" @click="successFlash=false">&times;</span>
+                </button>
+            </div>
+        </div>
+        #}
+        <div class="col-md-12">
+            <div class="p-r-10 p-r-0-sr991">
+                <validation-observer v-slot="{ invalid, handleSubmit, reset }" ref="form">
+                    <form action="" method="post" class="vld-parent" @submit.prevent="handleSubmit(submit)"  @reset.prevent="reset" id="stepAccountForm" novalidate="novalidate">
+                        <loading :active.sync="loader.isLoading"
+                                 :can-cancel="loader.canCancel"
+                                 :on-cancel="onCancel"
+                                 :loader="loader.loader"
+                                 :color="loader.color"
+                                 :height="loader.height"
+                                 :width="loader.width"
+                                 :is-full-page="loader.fullPage"></loading>
+                        <div class="form-row flex-row-c-c bg-light p-t-8 m-tb-20">
+                            <div class="col-md-4 flex-row-c-c mb-3">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio" id="cr-inv" name="mainActivity" value="investissor"  class="custom-control-input" v-model="form.mainActivity" required="">
+                                    <label class="custom-control-label js_user_type" for="cr-inv" data-id="inv">Devenir Investisseur</label>
+                                </div>
+                            </div>
+                            <div class="col-md-4 flex-row-c-c mb-3">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input type="radio"  id="cr-ent" name="mainActivity" value="entrepenor" class="custom-control-input" v-model="form.mainActivity" required="" checked="checked" >
+                                    <label class="custom-control-label js_user_type" for="cr-ent" data-id="ent">Je suis Entrepreneur</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="js_invblock" v-if="form.mainActivity=='entrepenor'">
+                            <p class="text-center f1-s-12 cl4">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                tempor incididunt ut labore et dolore magna aliqua.
+                            </p>
+                        </div>
+
+                        <div class="js_entblock" v-else>
+                            <p class="text-center f1-s-12 cl4">
+
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod.
+                            </p>
+                        </div>
+
+                        <div class="col-md-6 mx-auto m-t-30" v-if="successFlash===true">
+                            <div class="p-r-0-sr991 f1-s-12">
+                                <div class="alert alert-danger">
+                                    <span class="">${ messageFlash }$ </span>
+                                </div>
+                                <button type="button" class="close">
+                                    <span id="closeAlert" aria-hidden="true" @click="successFlash=false">&times;</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mx-auto bg-light p-all-20 borad-4 m-tb-20 mb-3">
+                            <label class="m-b-20" for="country"><b>Pays et ville de résidence *</b></label>
+                            <div class="form-row">
+                                <div class="col-6">
+                                    {#
+                                    <validation-provider name="country" rules="required|max:230" v-slot="{ errors }">
+                                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" id="country" name="country" v-model="form.country" :class="{'input-error': errors[0] }"  placeholder="Pays *">
+                                        {{ form_widget(userInfoForm.country, {'attr': {'class': 'bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20', 'v-model' : 'form.country', ':class' : '{\'input-error\': errors[0] }' } }) }}
+                                        <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                    </validation-provider> #}
+                                    {{ form_widget(userInfoForm.country, {'attr': {'class': 'bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20' } }) }}
+                                </div>
+
+                                <div class="col-6">
+                                    <validation-provider name="city" rules="required|max:230" v-slot="{ errors }">
+                                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" name="city" v-model="form.city" :class="{'input-error': errors[0] }"  placeholder="Ville *">
+                                        <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                    </validation-provider>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-12">
+                                    <validation-provider name="telephone number" rules="required|integer|max:230" v-slot="{ errors }">
+                                        <label class="m-b-20" for="phoneNumber"><b>Numéro de téléphone *</b></label>
+                                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" id="phoneNumber" name="phoneNumber" v-model="form.phoneNumber" :class="{'input-error': errors[0] }"  placeholder="Tél (Ex: 0022965656565) *">
+                                        <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                    </validation-provider>
+
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="col-12">
+                                    {#
+                                    <validation-provider name="professions" rules="required|max:230" v-slot="{ errors }">
+                                        <label class="m-b-20" for="profession"><b>Profession ou domaine d'expertise *</b></label>
+                                        <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" id="profession"  name="profession" v-model="form.profession"  :class="{'input-error': errors[0] }" placeholder="Ex : Marketing Numérique, Lead Generation, Jeux Vidéo, Start-ups" value="">
+
+                                        <div class="custom-invalid-feedback mt-0">${ errors[0] }$</div>
+                                    </validation-provider> #}
+                                    <label class="m-b-20" for="professions"><b>Profession ou domaine d'expertise *</b></label>
+                                    {{ form_widget(userInfoForm.professions, {'attr': {'class': 'select-js bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20' } }) }}
+                                </div>
+                            </div>
+
+                            <div class="form-row js_invblock" v-if="form.mainActivity!='entrepenor'">
+                                <div class="col-12">
+                                    <div class="form-check m-b-5">
+                                        <input class="form-check-input" type="checkbox" id="" name="hasCompany">
+                                        <label class="form-check-label" for="gridCheck">
+                                            J'ai une/plusieurs entreprises
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <input type="hidden" name="_token" value="{{ csrf_token('_token') }}">
+                                <button type="submit" class="size-a-19 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                                    VALIDER ET CONTINUER <i class="fa fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                </validation-observer>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+
+{% block stylesheets %}
+    <link rel="stylesheet" href="{{ asset('vendors/select2/css/select2.min.css') }}">
+    <link rel="stylesheet" href="{{ asset('vendors/select2-bootstrap4-theme/select2-bootstrap.min.css') }}">
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('vendors/select2/js/select2.min.js') }}"></script>
+    <script>
+        $(document).ready(function() {
+            // you may need to change this code if you are not using Bootstrap Datepicker
+            $('.select-js').select2({
+                theme: "bootstrap"
+            });
+        });
+
+
+    </script>
+    <script>
+        var stepAccountApp = new Vue({
+            el: '#stepAccountApp',
+            delimiters: ['${', '}$'],
+            data: {
+                successFlash: false,
+                messageFlash: '',
+                loader: {
+                    isLoading: false,
+                    canCancel: false,
+                    fullpage: true,
+                    color: '#17b978',
+                    height: 56,
+                    width: 56,
+                    loader: 'spinner',
+                },
+                form: {
+                    phoneNumber: '',
+                    country: '',
+                    city: '',
+                    profession:'',
+                    professions: '',
+                    mainActivity:'entrepenor',
+                    hasCompany:''
+                },
+                activities: [ 'entrepenor', 'investissor'],
+                activity:'',
+            },
+            methods: {
+                submit () {
+                    this.loader.isLoading = true;
+                    var form = document.getElementById('stepAccountForm');
+                    var formData = new FormData(form);
+                    axios({
+                        method: 'post',
+                        url: '{{ absolute_url(path("app_register_step_account_one")) }}',
+                        data: formData
+                    }).then(function (response) {
+                        stepAccountApp.loader.isLoading = false;
+                        stepAccountApp.messageFlash = response.data.message + " Vous allez etre redirigé dans 5s" ;
+                        stepAccountApp.successFlash = true ;
+
+                        setTimeout(function () {
+                            document.location.href = "{{ absolute_url(path('app_user')) }}" ;
+
+                        }, 5000) ;
+
+                    }).catch(function (error) {
+                        stepAccountApp.loader.isLoading = false;
+                        alert(error.response.data.message) ;
+                    }) ;
+                },
+                onCancel() {
+                    console.log('User cancelled the loader.')
+                }
+            }
+        });
+    </script>
+{% endblock %}

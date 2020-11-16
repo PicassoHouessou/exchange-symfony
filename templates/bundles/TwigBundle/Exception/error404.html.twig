@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} An Error Occurred: {{ status_text }} {% endblock %}
+
+{% block body %}
+<div class="container-fluid size-a-14 p-tb-60 border-bottom bg-img3 how-overlay2 how1 pos-relative" style="background-image: url({{ absolute_url(asset( 'assets/images/bg/vignoble.jpg')) }});">
+    <div class="col-lg-12">
+        <h1 class="f1-l-5 txt-center cl4 p-b-10">
+            {{ status_code ~' '~ status_text }}
+        </h1>
+
+        <p class="text-center f1-s-12 cl4">
+            La page que vous demandez n'existe peut-être pas ...
+        </p>
+
+        <p class="txt-center m-t-10">
+            <a href="{{ absolute_url(path('app_home')) }}"><i class="fa fa-long-arrow-left"></i> Retour en zone sûr</a>
+        </p>
+    </div>
+</div>
+
+<!-- End Main signin content End-->
+
+<section class="container-fluid bg0 p-rl-0 p-tb-55">
+    <div class="row m-rl-0 justify-content-center">
+        <div class="col-lg-10 404 mx-auto flex-c-c">
+            <img src="{{ absolute_url(asset('assets/images/404.png')) }}">
+        </div>
+    </div>
+</section>
+
+{% endblock %}

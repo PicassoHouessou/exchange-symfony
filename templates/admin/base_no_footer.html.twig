@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Conversion | Administration</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="apple-touch-icon" type="image/png" href="{{ asset('assets/images/favicon.png') }} ">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ absolute_url(asset( 'admin/plugins/fontawesome-free/css/all.min.css' ))  }}">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ absolute_url(asset( 'admin/dist/css/adminlte.min.css')) }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ absolute_url(asset( 'admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')) }}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ absolute_url(asset( 'admin/plugins/summernote/summernote-bs4.css')) }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+</head>
+
+<body class="hold-transition login-page">
+{% for message in app.flashes('success') %}
+    <div class="d-block " style="display: block; position: fixed; right: 5px; top: 60px; z-index: 1111;">
+        <div class="alert alert-success text-light bg-success" role="alert" style="max-width: 800px; border: none;" >
+            {{ message }} &nbsp;&nbsp;
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+    <div class="d-block " style="display: block; position: fixed; right: 5px; top: 60px; z-index: 1111;">
+        <div class="alert alert-danger text-light bg-danger" role="alert" style="max-width: 800px; border: none;" >
+            {{ message }} &nbsp;&nbsp;
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+{% endfor %}
+{% block body %}
+
+
+{% endblock %}
+
+
+<!-- jQuery -->
+<script src="{{ absolute_url(asset( 'admin/plugins/jquery/jquery.min.js')) }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ absolute_url(asset( 'admin/plugins/jquery-ui/jquery-ui.min.js')) }}'"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+
+<!-- Bootstrap 4 -->
+<script src="{{ absolute_url(asset( 'admin/plugins/bootstrap/js/bootstrap.bundle.min.js')) }}"></script>
+<!-- Summernote -->
+<script src="{{ absolute_url(asset( 'admin/plugins/summernote/summernote-bs4.min.js')) }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ absolute_url(asset( 'admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js')) }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ absolute_url(asset( 'admin/dist/js/adminlte.min.js')) }}'"></script>
+
+{% block javascripts %}
+{% endblock %}
+</body>
+</html>

@@ -1,0 +1,18 @@
+{% extends 'admin/base_no_footer.html.twig' %}
+
+{% block title %}Admin Password Reset Email Sent{% endblock %}
+
+{% block body %}
+
+    <div class="login-box">
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body ">
+                Your may have receive an password reset email. This link will expire in {{ tokenLifetime|date('g') }} hour(s)
+            </div>
+        </div>
+    </div>
+    <!-- /.login-box -->
+
+{% endblock %}
+

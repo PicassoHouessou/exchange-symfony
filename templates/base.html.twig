@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+<head>
+    <!-- Mobile Specific Meta -->
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Favicon-->
+    <link rel="shortcut icon" href="{{ absolute_url(asset('img/fav.png')) }}">
+    <!-- Author Meta -->
+    <meta name="author" content="codepixer">
+    <!-- Meta Description -->
+    <meta name="description" content="">
+    <!-- Meta Keyword -->
+    <meta name="keywords" content="">
+    <!-- meta character set -->
+    <meta charset="UTF-8">
+    <!-- Site Title -->
+    <title>Bitcoin</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Poppins:100,200,400,300,500,600,700" rel="stylesheet">
+    <!--
+    CSS
+    ============================================= -->
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/linearicons.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/font-awesome.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/bootstrap.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/magnific-popup.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/nice-select.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/animate.min.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/owl.carousel.css')) }}">
+    <link rel="stylesheet" href="{{ absolute_url(asset('assets/css/main.css')) }}">
+    {% block stylesheets %}
+    {% endblock %}
+</head>
+<body>
+{% for message in app.flashes('success') %}
+<div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+{% endfor %}
+{% for message in app.flashes('error') %}
+<div style="position: fixed; top: 100px; right: 40px; z-index: 300 ;">
+    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+</div>
+{% endfor %}
+
+{% block header %}
+<header id="header" >
+    <div class="container">
+        <div class="row align-items-center justify-content-between d-flex">
+            <div id="logo">
+                <a href="{{ absolute_url(path('app_home')) }}">{#<img src="{{ absolute_url(asset('assets/img/logo.png')) }}" alt="" title="" />#}  <span class="text-white text-uppercase text-bold" style="font-weight: bold;">Conversion</span></a>
+            </div>
+            <nav id="nav-menu-container">
+                <ul class="nav-menu">
+                    <li class="menu-active"><a href="{{ absolute_url(path('app_home')) }}">Accueil</a></li>
+                    <li><a href="
+                    <li class="menu-active"><a href="{{ absolute_url(path('app_home', {'_fragment': 'convert'})) }}">Conversion</a></li>
+                    <li><a href="{{ absolute_url(path('app_home', {'_fragment': 'feature'} ) )}}">Fonctionnalité</a></li>
+                    <li><a href="{{ absolute_url(path('app_home', {'_fragment': 'price'})) }}">Price</a></li>
+                    {#
+                    <li class="menu-has-children"><a href="">Pages</a>
+                        <ul>
+                            <li><a href="generic.html">Generic</a></li>
+                            <li><a href="elements.html">Elements</a></li>
+                        </ul>
+                    </li>
+                    #}
+                </ul>
+            </nav><!-- #nav-menu-container -->
+        </div>
+    </div>
+</header><!-- #header -->
+{% endblock %}
+
+{% block body %}
+
+{% endblock %}
+
+{% block footer %}
+    <!-- start footer Area -->
+    <footer class="footer-area section-gap">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3  col-md-6 col-sm-6">
+                    <div class="single-footer-widget">
+                        <h4 class="text-white">About Us</h4>
+                        <p>
+                            Deplus plus d'une dizaine d'années, nous travaillons à faciliter les échanges de devises
+                        </p>
+                    </div>
+                </div>
+                {#
+                <div class="col-lg-6  col-md-6 col-sm-6 offset-2">
+                    <div class="single-footer-widget">
+                        <h4 class="text-white">Newsletter</h4>
+                        <p>Abonnez vous pour etre au courant des dernières news</p>
+                        <div class="d-flex flex-row" id="mc_embed_signup">
+                            {{ render ( path('app_embed_newsletters_add') ) }}
+                        </div>
+                    </div>
+                </div>
+        #}
+            </div>
+            <div class="footer-bottom d-flex justify-content-between align-items-center flex-wrap">
+                <p class="footer-text m-0">
+                    Copyright &copy; {{ 'now' |date('Y') }} All rights reserved <a href="mailto:houessoupicasso@yahoo.fr">Picasso Houessou</a>
+
+                </p>
+                <div class="footer-social d-flex align-items-center">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End footer Area -->
+{% endblock %}
+
+<script src="{{ absolute_url(asset('assets/js/vendor/jquery-2.2.4.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/popper.min.js')) }}" ></script>
+<script src="{{ absolute_url(asset('assets/js/vendor/bootstrap.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/easing.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/hoverIntent.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/superfish.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/jquery.magnific-popup.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/owl.carousel.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/jquery.sticky.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/jquery.nice-select.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/parallax.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/waypoints.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/jquery.counterup.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/mail-script.js')) }}"></script>
+<script src="{{ absolute_url(asset('assets/js/main.js')) }}"></script>
+<script src="{{ absolute_url(asset('vendors/vue/vue.js')) }}"></script>
+<script src="{{ absolute_url(asset('vendors/axios/axios.js')) }}"></script>
+<script src="{{ absolute_url(asset('vendors/vue-loading-overlay/vue-loading-overlay@3.js')) }}"></script>
+{% block javascripts %}
+
+{% endblock %}
+</body>
+</html>
+

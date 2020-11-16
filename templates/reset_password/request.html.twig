@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% block body %}
+
+
+    <div class="container-fluid p-tb-80 border-bottom">
+        <div class="col-lg-12">
+            <h2 class="f1-l-5 txt-center cl2 p-b-10">
+                Créez votre nouveau mot de passe
+            </h2>
+        </div>
+    </div>
+
+    <!-- Password forgot step 1 ---  -->
+
+     <section class="bg0 p-tb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-lg-5 p-b-80">
+                    <div class="f1-m-2 m-b-20">
+                        <h2><span class="editableLabel" >Saisissez votre email</span></h2>
+                    </div>
+                    {% for flashError in app.flashes('reset_password_error') %}
+                         <div class="p-r-10 p-r-0-sr991 f1-s-12 m-b-20">
+                       <h2 class="alert alert-success">
+                           <span class="">{{ flashError }}</span>
+                       </h2>
+                   </div>
+                    {% endfor %}
+                    <div class="p-r-10 p-r-0-sr991">
+                        <form action="" method="post" novalidate="novalidate">
+                            {{ form_errors(requestForm.email) }}
+                            {{ form_widget(requestForm.email,{'attr':{'placeholder':'Your email', 'class': 'bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20'} }) }}
+
+                            {{ form_rest(requestForm) }}
+                            <button class="size-a-19 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                                Soumettre
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

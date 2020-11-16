@@ -1,0 +1,407 @@
+{% extends 'base.html.twig' %}
+
+{% block stylesheets %}
+    <style>
+        .reserve {
+            color: black;
+            background-color: white;
+            border-radius: 5px;
+            margin-top: 15px;
+            padding-left: 7px;
+            padding-right: 7px;
+
+            font-weight: bold;
+
+        }
+        .input-error {
+            outline-color: red !important;
+            border: red solid;
+
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <!-- start banner Area -->
+    <section class="banner-area relative" id="home">
+        <div class="overlay overlay-bg"></div>
+        <div class="container">
+            <div class="row fullscreen d-flex align-items-center justify-content-start">
+                <div class="banner-content col-lg-12 col-md-12">
+
+                    <p class="text-white pt-20 pb-20">
+                        Echanger vos devises ici en un clic
+                    </p>
+                    <a href="#convert" class="primary-btn header-btn text-uppercase">Commencer</a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End banner Area -->
+
+    <!-- Start convert Area -->
+    <section class="convert-area" id="convert">
+        <div class="container">
+            <div class="convert-wrap">
+                <div class="row justify-content-center align-items-center flex-column pb-30">
+                    <h1 class="text-white">Le convertisseur</h1>
+                    <p class="text-white">Convertir et échange ta devise, c'est simple et sûr</p>
+                </div>
+                <form class="row justify-content-center align-items-start">
+                    <div class="col-lg-3 cols">
+                        <div id="">
+                            <select name="currency" class=" form-select nice-select mb-20 nice-select"
+                                    id="currencyFrom" @change.prevent="selectConvertTo">
+                                <option v-for="field in currency" :value="field.code">${ field.label }$</option>
+                            </select>
+                        </div>
+
+                        <input type="text" name="poundFrom" id="poundFrom" placeholder="pounds" @input.prevent="convertTo"
+                               v-model.number="form.from.value" class="form-control" :class="{'input-error' : form.from.error === true } ">
+                        <span class="reserve" v-if="reserveFrom">
+                            max : ${ reserveFrom }$
+                        </span>
+                    </div>
+
+                    <div class="col-lg-3 cols ">
+                        <div class="col-lg-8 offset-lg-2 pt-2 mt-2" style="text-align: center;">
+                            <h1 class="text-white">To</h1>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3 cols">
+                        <select name="currency" class="form-select nice-select mb-20" id="currencyTo"  @change.prevent="convertFrom">
+
+                            <option v-for="field in currency" :value="field.code">${ field.label }$</option>
+                        </select>
+                        <input type="text" name="poundTo" id="poundTo" placeholder="pounds" class="form-control "
+                               v-model.number="form.to.value" @input="convertFrom" :class="{'input-error' : form.to.error } ">
+                        <span class="reserve" v-if="reserveTo">
+                            max: ${  reserveTo }$
+                        </span>
+                        <a href="{{ absolute_url(path('app_purchase')) }}" class="primary-btn header-btn text-uppercase mb-20 mt-20" @click.prevent="submit">Payer</a>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </section>
+    <!-- End convert Area -->
+
+
+    <!-- Start service Area -->
+    <section class="service-area section-gap" id="feature" style="margin-bottom: 70px !important; ">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="col-md-9 pb-40 header-text">
+                    <h1>Pourquoi choisir nos services?</h1>
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-user"></span>Techniciens experts </h4>
+                        <p>
+                            Très experimentés, nous sommes une équipes de techniciens accomplis pour vous rendre
+                            services
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-license"></span>Service professionnel</h4>
+                        <p>
+                            Un service 100% professionnel
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-phone"></span>Un support complet</h4>
+                        <p>
+                            Grace a notre service clientèle nous nous garantissons une meilleure experience
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-rocket"></span>100% rapide</h4>
+                        <p>Notre service est très rapide. Vous recevez immédiatement l'argent
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-diamond"></span>Très économique</h4>
+                        <p>
+                            Les frais d'échanges sont à bas prix
+                        </p>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6">
+                    <div class="single-service">
+                        <h4><span class="lnr lnr-bubble"></span>Satisfation Clientèle</h4>
+                        <p>Nos clients sont très satusfaits de os services
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End service Area -->
+
+    {#
+        <!-- Start callaction Area -->
+        <section class="callaction-area section-gap">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-9">
+                        <h1 class="text-white">Huge Transaction in last Week</h1>
+                        <p class="text-white">
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore
+                            magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.
+                        </p>
+                        <a href="#" class="primary-btn">Buy Bitcoin Now!</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End callaction Area -->
+    #}
+
+    <!-- Start price Area -->
+    <section class="price-area pt-5" id="price">
+        <div class="container">
+            <div class="row d-flex justify-content-center">
+                <div class="menu-content pb-60 col-lg-8">
+                    <div class="title text-center">
+                        <h1 class="mb-10">Devises disponibles</h1>
+                        <p>Vous pouvez échanger très facilement dans ces devises.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                {% for field in currency %}
+                    <div class="col-lg-3">
+                        <div class="single-price no-padding">
+                            <div class="price-top mb-0">
+                                <h4 class="mt-0">{{ field.label }}</h4>
+                                <span class="m-1">{{ field.reserve }}</span>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+    <!-- End price Area -->
+
+
+    <!-- Start blog Area -->
+    <section class="blog-area section-gap">
+        <div class="container">
+        </div>
+    </section>
+    <!-- End blog Area -->
+
+{% endblock %}
+{% block javascripts %}
+
+
+    <script>
+        let currency2 = [
+            {
+                code: 'FCFA',
+                label: 'Franc CFA',
+                rate: 1.2
+            },
+            {
+                code: 'USD',
+                label: 'Dollar',
+                rate: 1
+            },
+            {
+                code: 'GBA',
+                label: 'Franc CFA',
+                rate: 1.2
+            },
+            {
+                code: '€',
+                label: 'Euro',
+                rate: 1.2
+            }
+
+        ];
+        let currency = [];
+
+        var app = new Vue({
+            el: '#convert',
+            delimiters: ['${', '}$'],
+            data() {
+                return {
+                    currency,
+                    reserveFrom: '',
+                    reserveTo: '',
+                    form: {
+                        from: {
+                            label: '',
+                            value: '',
+                            error: false ,
+                        },
+                        to: {
+                            label: '',
+                            value: '',
+                            error: false
+                        }
+                    }
+                }
+            },
+            mounted() {
+                //let response = null ;
+                this.getAllCurrency();
+
+
+            },
+            methods: {
+                convertTo(event) {
+                    let value = event.currentTarget.value;
+                    value = parseFloat(value);
+                    if (Number.isNaN(value)) {
+                        this.form.to.value = '';
+                        return '';
+                    }
+                    let currencyFrom = document.getElementById('currencyFrom');
+                    let currencyTo = document.getElementById('currencyTo');
+
+                    if (currencyFrom.value === currencyTo.value) {
+                        this.form.to.value = value;
+
+                        this.form.to.error = true ;
+
+                        return true;
+                    }
+
+                    function checkFrom(field) {
+                        return field.code === currencyFrom.value;
+
+                    }
+
+                    function checkTo(field) {
+                        return field.code === currencyTo.value;
+
+                    }
+
+                    let elementFrom = this.currency.find(checkFrom);
+
+                    let elementTo = this.currency.find(checkTo)
+
+                    this.reserveFrom = elementFrom.reserve;
+                    this.reserveTo = elementTo.reserve;
+
+                    let result = value * elementFrom.rate * (1 / elementTo.rate);
+
+                    result = Math.round(result * 1000) / 1000;
+                    this.form.to.value = result;
+                    return true;
+
+                },
+                convertFrom(event) {
+                    let value = event.currentTarget.value;
+                    value = parseFloat(value);
+                    if (Number.isNaN(value)) {
+                        this.form.to.value = '';
+                        return '';
+                    }
+                    let currencyFrom = document.getElementById('currencyFrom');
+                    let currencyTo = document.getElementById('currencyTo');
+
+                    if (currencyFrom.value === currencyTo.value) {
+                        this.form.from.value = value;
+                        return true;
+                    }
+
+                    function checkFrom(field) {
+                        return field.code === currencyFrom.value;
+                    }
+
+                    function checkTo(field) {
+                        return field.code === currencyTo.value;
+                    }
+
+                    let elementFrom = this.currency.find(checkFrom);
+
+                    let elementTo = this.currency.find(checkTo)
+
+                    this.reserveFrom = elementFrom.reserve;
+                    this.reserveTo = elementTo.reserve;
+
+                    let result = value * elementTo.rate * (1 / elementFrom.rate);
+
+                    result = Math.round(result * 1000) / 1000;
+                    this.form.from.value = result;
+                    return true;
+
+                },
+                getAllCurrency() {
+                    axios.get('{{ absolute_url(path("app_currency_all")) }}')
+                        .then((response) => {
+                            this.currency = JSON.parse(response.data);
+                            console.log(this.currency);
+                        })
+                        .catch(error => {
+                            console.log(error)
+
+                        });
+                },
+                submit(event) {
+
+                    let currencyFrom = document.getElementById('currencyFrom');
+                    let currencyTo = document.getElementById('currencyTo');
+
+                    function checkFrom(field) {
+                        return field.code === currencyFrom.value;
+                    }
+
+                    function checkTo(field) {
+                        return field.code === currencyTo.value;
+                    }
+
+                    let elementFrom = this.currency.find(checkFrom);
+
+                    let elementTo = this.currency.find(checkTo);
+
+                    if (currencyFrom.value === currencyTo.value) {
+                        return false;
+                    }
+
+                    if ( elementFrom.reserve < this.form.from.value ) {
+                        this.form.from.error = true ;
+                    }
+                    if (elementTo.reserve < this.form.to.value)  {
+                        this.form.to.error = true ;
+                    }
+
+                    if ( elementFrom.reserve < this.form.from.value || elementTo.reserve < this.form.to.value) {
+                        return false ;
+                    }
+
+                    let href = event.currentTarget.href ;
+                    href = href+'?from=' + this.form.from.value + '' + elementFrom.code + '&to=' + this.form.to.value + '' + elementTo.code ;
+
+                    document.location.href = href  ;
+
+                    return true ;
+                },
+                selectConvertTo()
+                {
+                    //let poundFrom = document.getElementById('poundFrom') ;
+
+
+                }
+            }
+        })
+    </script>
+
+{% endblock %}
+

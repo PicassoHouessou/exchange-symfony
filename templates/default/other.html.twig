@@ -1,0 +1,427 @@
+{% extends 'base.html.twig' %}
+
+{% form_theme newslettersForm 'bootstrap_4_layout.html.twig' %}
+
+{% block body %}
+    <div id="app">
+<!--[if lt IE 8]>
+<p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href=" http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+<![endif]-->
+<!-- preloder-wrap -->
+<div id="cssLoader3" class="preloder-wrap">
+    <div class="loader">
+        <div class="child-common child4"></div>
+        <div class="child-common child3"></div>
+        <div class="child-common child2"></div>
+        <div class="child-common child1"></div>
+    </div>
+</div>
+
+<!-- heared area start -->
+<header class="header-area">
+    <div class="header-bottom" id="sticky-header">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-8 col-sm-8 col-xs-6">
+                    <div class="logo" style="height: -0rem; width: auto;">
+                        <a href="{{ path('app_home') }}"><img src="/assets/images/logo/dmv_logo_Last.png" alt="logo" id="logo"/></a>
+
+                    </div>
+                </div>
+                <div class="col-md-9 col-md-9 hidden-sm hidden-xs">
+                    <div class="mainmenu">
+                        <ul id="navigation">
+                            <li class="active"><a href="{{ path('app_home') }}">Home</a></li>
+                            <li><a href="{{ path('app_business') }}">Business opportunity</a></li>
+                            <li><a href="{{ path('app_promotion') }}">Promotion d'entreprise</a></li>
+                            <li class="no-back"><a href="{{ path('app_login') }}">Se connecter</a></li>
+                            <li><a href="{{  path ('app_register') }}">S'inscrire</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-sm-2 clear col-xs-3 hidden-md hidden-lg">
+                    <div class="responsive-menu-wrap floatright"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+<!-- heared area end -->
+        {#
+    {% for message in app.flashes('newslettersAddSuccess') %}
+        <div class="d-block " style="display: block; position: fixed; left: 5px; bottom: 60px; z-index: 111;">
+        <div class="alert alert-success text-light bg-success" role="alert" style="max-width: 800px; border: none;" >
+            <strong>Super ! </strong> {{ message}} &nbsp;&nbsp;
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+        #}
+        <div class=" d-none" id="flashAlert" style="display: block; position: fixed; left: 5px; bottom: 60px; z-index: 111;">
+            <div class="alert alert-success text-light bg-success" role="alert" style="max-width: 800px; border: none;" >
+                <strong>Super ! </strong>  &nbsp;&nbsp;
+                <button type="button" class="close">
+                    <span id="closeAlert" aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+
+<!-- slider area start -->
+<section class="slider-area">
+    <div class="slider-active2 slider-next-prev-style">
+        <div class="slider-items">
+            <img src="/assets/images/bg/collaboration.jpg')}}" alt="" class="slider">
+            <div class="slider-content text-center">
+                <div class="table">
+                    <div class="table-cell">
+                        <div class="container">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 px-0 py-1 project-img">
+                                    <img src="/assets/images/projects/p-img/11.jpg" alt="" class="p-img img-fluid">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 d-flex justify-content-start p-content">
+                                    <div class="p-short">
+                                        <img src="/assets/images/projects/p-logo/instaship.png" width="120" class="p-logo">
+                                        <h3 class="p-title pt-5 pb-2">Project Y</h3>
+                                        <p class="text-center text-muted p-tags">
+                                            <small>
+                                                Startup ·
+                                                Environnement ·
+                                                Cleantech <i class="fa fa-tags"></i>
+                                            </small><br>
+                                            <small> Pertuis(84) <i class="fa fa-map-pin"></i>  </small>
+                                        </p>
+
+                                        <p class="p-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                            tempor incididunt ut labore.</p>
+
+                                        <ul>
+                                            <li><a class="ready-btn btn-danger" href="">J'INVESTIS</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="slider-items">
+            <img src="/assets/images/bg/collaboration.jpg" alt="" class="slider">
+            <div class="slider-content text-center">
+                <div class="table">
+                    <div class="table-cell">
+                        <div class="container">
+                            <div class="row d-flex justify-content-center align-items-center">
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-8 px-0 py-1 project-img">
+                                    <img src="/assets/images/projects/p-img/10.jpg" alt="" class="p-img img-fluid">
+                                </div>
+                                <div class="col-12 col-sm-12 col-md-12 col-lg-4 d-flex justify-content-start p-content">
+                                    <div class="p-short">
+                                        <img src="/assets/images/projects/p-logo/instaship.png" width="120" class="p-logo">
+                                        <h3 class="p-title pt-5 pb-2">Project Y</h3>
+                                        <p class="text-center text-muted p-tags">
+                                            <small>
+                                                Startup ·
+                                                Environnement ·
+                                                Cleantech <i class="fa fa-tags"></i>
+                                            </small><br>
+                                            <small> Pertuis(84) <i class="fa fa-map-pin"></i>  </small>
+                                        </p>
+
+                                        <p class="p-desc">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                            tempor incididunt ut labore.</p>
+
+                                        <ul>
+                                            <li><a class="ready-btn btn-danger" href="">J'INVESTIS</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- slider area end --><br><br><br>
+
+
+<!-- about-area start -->
+<section class="about-area">
+                                                <div class="container">
+                                                    <div class="row">
+                                                        <div class="col-md-8 col-sm-10 m-auto col-xs-12">
+                                                            <div class="section-title text-center">
+                                                                <h2 id="welcome">Welcome to DMV Investment Group</h2>
+                                                                <p>We assist you in your choice of investment on the international market.</p>
+                                                            </div><br><br>
+
+                                                            <!--<hr class="hr" style="border-width: 1px;"><br>-->
+
+                                                        </div>
+                                                        <div class="col-md-6 col-xs-12 wow fadeInLeft">
+                                                            <div class="about-img black-opacity">
+                                                                <div class="video-wrap text-center">
+                                                                    <a href="/assets/images/Dmv.mp4" class="video-popup">
+                                                                        <i class="fa fa-play"></i>
+                                                                    </a>
+                                                                </div>
+
+                                                                <img src="/assets/images/About1.jpg" alt="" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-6 col-xs-12 wow fadeInRight pt-5">
+                                                            <div class="about-wrap text-justify">
+                                                                <!--<h2>Abot us</h2>-->
+                                                                <ul>
+                                                                    <li>
+                                                                        <p>
+
+                                                                            We ensure the satisfaction of our different customers by allowing them to have the expected results on their investment. Following a good management of resources and a rational anticipation of the trend of the international market, we give the Ideal to
+                                                                            our customers all over the world.
+                                                                        </p>
+                                                                    </li>
+                                                                    <li>
+                                                                        <p>
+                                                                            We offer you the suitable service of your choice and according to your expectations.</p>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <p>
+                                                                            We offer you the suitable service of your choice and according to your expectations. Our staff are committed to ensuring that your goals are met in a pleasant and rewarding way. With DMV Investment group, your investments and interests are insured.</p>
+                                                                    </li>
+                                                                </ul>
+
+                                                                <div class="text-right">
+                                                                    <a href="{{ path('app_contact') }}" class="btn btn-primary">read more ></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+</section>
+<!-- about-area end --><br><br><br><br>
+
+
+<!-- newsletter-area start -->
+<section class="newsletter-area bg-img-1 black-opacity wow fadeInUp">
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-6 col-xs-12">
+                <div class="newsletter-wrap">
+                    <h2>Subscribe to Newsletters</h2>
+                    <p>
+                        Get the latest updates and details on new business opportunities via email</p>
+                </div>
+            </div>
+
+            <!--<form action='newsletter.php' method='post'>
+                    <div class="stuff">Email <input type="text" name='email'>
+                    <button type="submit" name='submit' >Submit</button> <br></div>
+                    <?php if ($result) {echo $result ; }  ?>
+               </form>-->
+
+            <div class="col-md-6 col-xs-12">
+                <div class="newsletter-form form-style">
+                    <form method="post" action="{{ path('app_home')}}" novalidate id="newsletterForm">
+                        <div class="">
+                            {{ form_errors(newslettersForm.email) }}
+                        </div>
+                        <div class="col-md-12">
+                            {{ form_widget(newslettersForm.email, {'attr':{'placeholder':'Email'} } ) }}
+                            <button type="submit" name="submit" class="btn-style">Submit</button>
+                        </div>
+                        {#
+
+                        <ValidationProvider name="email" rules="required|email" v-slot="{ errors }">
+                            <input v-model="email" type="text">
+                            <span>${ errors[0] }$</span>
+                        </ValidationProvider>
+                        #}
+
+
+
+                        {{ form_rest(newslettersForm) }}
+
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- newsletter-area end -->
+
+<!-- footer-area start  -->
+<footer>
+    <div class="footer-top text-rich">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-3 col-sm-6 col-xs-12  col wow fadeInUp" data-wow-delay=".1s">
+                    <div class="footer-widget footer-logo">
+                        <a href="{{ path('app_home') }}"><img src="/assets/images/logo/dmv-white.png" alt="" /></a>
+                        <p>
+                            Your investment assistant on the international market.
+                        </p>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 col wow fadeInUp" data-wow-delay=".2s">
+                    <div class="footer-widget footer-menu">
+                        <h2>Quick links</h2>
+                        <ul>
+                            <li><a href="{{ path('app_home') }}">Home</a></li>
+                            <li><a href="{{ path('app_about') }}">About us</a></li>
+                            <li><a href="{{ path('app_contact') }}">Contact</a></li>
+                            <li><a href="{{ path('app_services') }}">Services</a></li>
+                            <li><a href="{{ path('app_faq') }}">Faq</a></li>
+
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-md-3 col-sm-6 col-xs-12 col wow fadeInUp" data-wow-delay=".4s">
+                    <div class="footer-widget quick-contact text-rich">
+                        <h2>Contact Us</h2>
+                        <ul>
+                            <li><i class="fa fa-phone"></i> +16468947237</li>
+                            <li><i class="fa fa-envelope"></i>  sales@dmvinvestmentgroup.com</li><br>
+
+                            <div class="social pt-1">
+                                <a href=""><i class="fa fa-facebook-square"></i></a>
+                                <a href=""><i class="fa fa-google-plus-square"></i></a>
+                                <a href=""><i class="fa fa-linkedin-square"></i></a>
+                                <a href=""><i class="fa fa-whatsapp"></i></a>
+                                <a href=""><i class="fa fa-twitter-square"></i></a>
+                            </div>
+                        </ul>
+                        <!--<form action="#">
+                                <input type="text" placeholder="Full Name">
+                                <input type="email" placeholder="Email">
+                                <textarea name="massage" id="massage" cols="30" rows="10" placeholder="Massage"></textarea>
+                                <button type="button" name="button" class="btn-style">Send</button>
+                            </form>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="footer-bottom text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-12">
+                    &copy; <script>document.write(new Date().getFullYear());</script> DMV Investment Group | All rights reserved
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!-- footer-area end  -->
+
+    </div>
+{% endblock %}
+
+
+{% block javascripts %}
+
+    <script src="{{ asset('vendors/axios/axios.js') }}"></script>
+    <script src="{{ asset('vendors/jquery-validation-1.19.2/dist/jquery.validate.min.js') }}"></script>
+    <script src="{{ asset('vendors/jquery-validation-1.19.2/dist/additional-methods.min.js') }}"></script>
+    {#<script src="{{ asset('assets/js/vue.js') }}"></script>
+    <script src="{{ asset('assets/js/veevalidate/vee-validate.js') }}"></script>#}
+{#{{ encore_entry_script_tags('home') }} #}
+
+    <script>
+        $(document).ready(function() {
+            $("#newsletterForm").validate({
+                rules:{
+                    email: {
+                        required: true
+                    }
+                },
+                messages: {
+                    email: {
+                        required: "Please enter a valid email"
+                    }
+                }
+            });
+
+            var form = $('#newsletterForm');
+            var flasAlert = $('#flashAlert');
+            var  message = $('#flashAlert div strong');
+            var previousContent = message.html() ;
+            var closeAlert = $('#closeAlert');
+
+            closeAlert.on('click', function (e) {
+                e.preventDefault();
+                flasAlert.addClass('d-none');
+
+            })
+
+            form.on('submit', function (e) {
+                e.preventDefault();
+
+                $.post(
+                    form.attr('action'),
+                    form.serialize(),
+                    function (data) {
+                    console.log(data) ;
+                    var response = data.message;
+
+                    message.html(previousContent + response );
+                    flasAlert.removeClass("d-none");
+
+                    }) ;
+            });
+
+
+        }) ;
+        /*
+                        axios({
+                            method: 'post',
+                            url: form.attr('action'),
+                            data: {
+                                firstName: 'Fred',
+                                lastName: 'Flintstone'
+                            }
+                        });
+                        */
+        /*
+        VeeValidate.extend('email', email) ;
+        Vue.component('ValidationProvider', VeeValidate.ValidationProvider);
+        var app = new Vue({
+            el: '#app',
+            data: {
+                email: ''
+            },
+            validations: {
+                email: {
+                    minLength: this.minLength(4)
+                }
+            },
+            methods: {
+                minLength: function (param) {
+                    if (param.length<4)
+                    {
+                        return false ;
+                    } else {
+                        return  true ;
+                    }
+
+                }
+
+            }
+        }) ;
+        Vue.use(window.vuelidate.default); */
+
+    </script>
+
+{% endblock %}
+

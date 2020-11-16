@@ -1,0 +1,79 @@
+
+{% extends 'admin/base.html.twig' %}
+{% block body %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Ajouter une devise</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Ajout de devise</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <div id="appUsers">
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-md-8 offset-1">
+                        <form role="form" method="post" action="" novalidate="novalidate">
+
+                            <div class="form-group">
+                                <label  for="exampleInputFile">Code de la monnaie</label>
+                                {{ form_widget(form.code) }}
+                                {{ form_errors(form.code) }}
+                            </div>
+                            <div class="form-group">
+                                <label class="" for="exampleInputFile">Nom de la monnaie</label>
+                                {{ form_widget(form.label) }}
+                                {{ form_errors(form.label) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label class="" for="exampleInputFile">Taux de la monnaie en USD</label>
+                                {{ form_widget(form.rate) }}
+                                {{ form_errors(form.rate) }}
+
+                            </div>
+                            <div class="form-group">
+                                <label class="" for="">Réserve en USD</label>
+                                {{ form_widget(form.reserve) }}
+                                {{ form_errors(form.reserve) }}
+
+                            </div>
+
+                            <div class="form-group">
+                                {{ form_rest(form) }}
+                                <button type="submit" class="btn btn-primary">Modifer</button>
+                            </div>
+                        </form>
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+
+            </section>
+            <!-- /.content -->
+
+        </div>
+
+    </div>
+
+    <!-- ./wrapper -->
+
+{% endblock %}
+{% block javascripts %}
+
+{% endblock %}
+

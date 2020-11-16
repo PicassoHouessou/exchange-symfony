@@ -1,0 +1,12 @@
+
+<form class="navbar-form" novalidate="novalidate" action="{{ absolute_url(path('app_embed_newsletters_add')) }}" method="post">
+    <div class="input-group add-on">
+        <input class="form-control" name="email" placeholder="Email address" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Email address'" required="" type="email">
+
+        <div class="input-group-btn">
+            <input type="hidden" name="_token" value="{{ csrf_token('_token') }}">
+            <button class="genric-btn" type="submit"><span class="lnr lnr-arrow-right"></span></button>
+        </div>
+    </div>
+    <div class="info mt-20"></div>
+</form>

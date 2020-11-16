@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Reset your password{% endblock %}
+
+{% form_theme resetForm 'bootstrap_4_layout.html.twig'  %}
+
+{% block body %}
+    <!-- Password forgot step 2 after mail confirmation -->
+
+    <section class="bg0 p-tb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-lg-5 p-b-80">
+                    <div class="f1-m-2 m-b-20">
+                        <h2><span class="">Saisissez un mot de passe</span></h2>
+                    </div>
+                    <!-- <div class="p-r-10 p-r-0-sr991 f1-s-12 m-b-20">
+                        <h2 class="alert alert-success">
+                            <span class="">Msg d'erreur ---</span>
+                        </h2>
+                    </div> -->
+                    <div class="p-r-10 p-r-0-sr991">
+                        {{ form_start(resetForm, {'attr':{'novalidate':'novalidate',"action": ""} }) }}
+                        <div class="mb-3 pb-0">
+                        {{ form_widget(resetForm.plainPassword, {'attr': {'class': 'bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18' }}) }}
+                        {{ form_errors(resetForm.plainPassword) }}
+                        </div>
+                        <div class="mb-3 pb-0">
+                        {{ form_widget(resetForm.confirmPlainPassword, {'attr': {'class': 'bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18' }}) }}
+                        {{ form_errors(resetForm.confirmPlainPassword) }}
+                        </div>
+                            <button class="size-a-19 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                                Soumettre
+                            </button>
+                            {{ form_end(resetForm) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+{% endblock %}

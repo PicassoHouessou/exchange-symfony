@@ -1,0 +1,61 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    no-reply_email: 'no-reply@conversion.com'
+    master_email: 'master@conversion.com'
+    support_email: 'support@conversion.com'
+    contact: ''
+    #knp_paginator.template.pagination: 'appbundle/bootstrap_v4_filtration.html.twig'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        bind:
+            $noreplyEmail: '%no-reply_email%'
+            $supportEmail: '%support_email%'
+            $projectDirectory: '%kernel.project_dir%'
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/Tests/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    Doctrine\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+
+    # I use this When I write my own twig extension
+    Symfony\Bridge\Twig\Extension\AssetExtension: '@twig.extension.assets'
+
+    App\EventSubscriber\ImageCacheSubscriber:
+        tags:
+            name: doctrine.event_subscriber
+
+#    App\EventSubscriber\OnlineSubscriber:
+#        tags:
+#            - { name: kernel.event_listener, event: kernel.terminate }
+
+
+    #App\EventSubscriber\SummaryMailSubscriber:
+    #    arguments: ['@mailer']
+
+    #App\Security\AdminResetPasswordHelper: '@symfonycasts.reset_password.token_generator'
+    #SymfonyCasts\Bundle\ResetPassword\Generator\ResetPasswordTokenGenerator: '@symfonycasts.reset_password.token_generator'
+    #SymfonyCasts\Bundle\ResetPassword\Util\ResetPasswordCleaner: '@symfonycasts.reset_password.cleaner'
+
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones

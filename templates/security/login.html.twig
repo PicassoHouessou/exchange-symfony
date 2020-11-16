@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}
+    Dmv Investment Group | Login
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid p-tb-60 border-bottom">
+        <div class="col-lg-12">
+            <h2 class="f1-l-5 txt-center cl2 p-b-10">
+                Connectez-vous à votre compte DMV
+            </h2>
+
+            <p class="text-center f1-s-12">
+                Pas encore inscrit ? &nbsp;
+                <a href="{{ absolute_url(path('app_register')) }}" class="btn btn-sm btn-outline-secondary btn-flat" rel="nofollow">Créer mon compte <i class="fa fa-arrow-right"></i></a>
+            </p>
+        </div>
+    </div>
+
+    <section class="bg0 p-tb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-5 col-lg-7 p-b-80">
+                    {% if error %}
+                    <div class="p-r-10 p-r-0-sr991 f1-s-12 m-b-20">
+                        <h2 class="alert alert-success">
+                            <span class="">{{ error.messageKey|trans(error.messageData, 'security') }}</span>
+                        </h2>
+                    </div>
+                    {% endif %}
+                    <div class="p-r-10 p-r-0-sr991">
+                        <form method="post" action="" novalidate="novalidate">
+                            <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="text" name="login" value="{{ last_username }}" placeholder="Votre email *">
+
+                            <input class="bo-1-rad-3 bocl13 size-a-19 f1-s-13 cl5 plh6 p-rl-18 m-b-20" type="password" name="password" placeholder="Mot de passe *">
+
+                            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}"
+                            >
+                            <button type="submit" class="size-a-19 bg2 borad-3 f1-s-12 cl0 hov-btn1 trans-03 p-rl-15 m-t-20">
+                                CONNEXION
+                            </button>
+                        </form>
+
+                        <p class="text-center p-t-20">
+                            <a href="{{ absolute_url(path('app_forgot_password_request')) }}" class="cl5">Mot de passe oublié ?</a> &nbsp;
+                            <a href="{{ absolute_url(path('app_register')) }}" class="cl5">Pas encore inscrit ?</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html.twig' %}
+
+{% block title %} Register success. Confirm email {% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid p-tb-80 border-bottom">
+        <div class="col-lg-12">
+            <h2 class="f1-l-5 txt-center cl2 p-b-10">
+                Création de compte terminée
+            </h2>
+        </div>
+    </div>
+
+    <div class="container-fuild p-tb-80">
+        <div class="f1-l-4 txt-center  justify-content-center">
+            <p class=" txt-center ">We send a confirmation code to your adress <b>{{ app.session.get('registerEmail') }}</b>. Check your mail.<br>
+                If you don't receive an email please check your spam folder or  <a href="{{ path('app_register_resend_email' ) }}"> try again</a></p>
+
+        </div>
+    </div>
+
+{% endblock %}

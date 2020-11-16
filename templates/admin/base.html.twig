@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Conversion| Administration {% endblock %}  </title>
+
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="{{ absolute_url( asset ('assets/images/icons/favicon.png')) }}"/>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="{{ absolute_url ( asset('admin/plugins/fontawesome-free/css/all.min.css') ) }}">
+    <!-- Ionicons -->
+    <!-- <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"> -->
+    <!-- JQVMap -->
+    <!-- DataTables -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('admin/dist/css/dataTables.bootstrap4.css')) }}">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('admin/dist/css/adminlte.min.css')) }}">
+    <!-- overlayScrollbars -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('admin/plugins/overlayScrollbars/css/OverlayScrollbars.min.css')) }}">
+    <!-- summernote -->
+    <link rel="stylesheet" href="{{ absolute_url( asset('admin/plugins/summernote/summernote-bs4.css')) }}">
+    <!-- Google Font: Source Sans Pro -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+
+  {#  {{ encore_entry_link_tags('admin') }} #}
+    {% block stylesheets %}{% endblock %}
+</head>
+
+<body class="hold-transition sidebar-mini layout-fixed">
+<div class="wrapper">
+    {% for message in app.flashes('success') %}
+        <div class="d-block " style="display: block; position: fixed; right: 5px; top: 60px; z-index: 1111;">
+            <div class="alert alert-success" role="alert" style="max-width: 800px; border: none;" >
+                {{ message }} &nbsp;&nbsp;
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+    {% for message in app.flashes('error') %}
+        <div class="d-block " style="display: block; position: fixed; right: 5px; top: 60px; z-index: 1111;">
+            <div class="alert alert-warning" role="alert" style="max-width: 800px; border: none;" >
+                {{ message }} &nbsp;&nbsp;
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        </div>
+    {% endfor %}
+
+    {% block header %}
+        <!-- Navbar -->
+        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+            <!-- Left navbar links -->
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="pushmenu" href="#"><i class="fas fa-bars"></i></a>
+                </li>
+                <li class="nav-item d-none d-sm-inline-block">
+                    <a href="{{ absolute_url(path('app_home')) }}" class="nav-link">Home</a>
+                </li>
+            </ul>
+
+            <!-- SEARCH FORM -->
+            <!-- <form class="form-inline ml-3">
+              <div class="input-group input-group-sm">
+                <input class="form-control form-control-navbar" type="search" placeholder="Search" aria-label="Search">
+                <div class="input-group-append">
+                  <button class="btn btn-navbar" type="submit">
+                    <i class="fas fa-search"></i>
+                  </button>
+                </div>
+              </div>
+            </form> -->
+
+            <!-- Right navbar links -->
+            <ul class="navbar-nav ml-auto">
+                <!-- Notifications Dropdown Menu -->
+                {#<li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li> #}
+
+                <!-- Log-out -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" href="{{ absolute_url(path('app_logout')) }}" data-toggle="tooltip" data-placement="bottom" title="Click to disconnect">
+                        <i class="fa fa-power-off"></i>
+                    </a>
+
+                </li>
+            </ul>
+        </nav>
+        <!-- /.navbar -->
+    {% endblock %}
+
+    {% block aside %}
+        <!-- Main Sidebar Container -->
+        <aside class="main-sidebar sidebar-dark-primary">
+            <!-- Brand Logo -->
+            <a href="" class="brand-link">
+                <span class="brand-text  text-bold text-center">Conversion</span>
+            </a>
+
+            <!-- Sidebar -->
+            <div class="sidebar">
+                <!-- Sidebar user panel (optional) -->
+
+
+                <!-- Sidebar Menu -->
+                <nav class="mt-2">
+                    <ul class="nav nav-pills nav-sidebar  nav-compact nav-child-indent flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                        <!-- Add icons to the links using the .nav-icon class
+                             with font-awesome or any other icon font library -->
+
+                        {#<li class="nav-header"><i class="nav-icon fas fa-tachometer-alt"> </i> DASHBOARD</li> #}
+                        <li class="nav-item">
+                            <a href="{{ absolute_url(path('app_admin')) }}" class="nav-link {% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as('MENU_DASHBOARD_GENERAL') %}{{ ' active ' }} {% endif %} ">
+                                <i class="nav-icon fas fa-tachometer-alt"></i>
+                                <p>DASHBOARD
+                                </p>
+                            </a>
+                        </li>
+
+                        {#<li class="nav-header"><i class="nav-icon fas fa-tachometer-alt"> </i> DASHBOARD</li> #}
+                        {#
+                        <li class="nav-item has-treeview {% if app.session.get("app_menu_open") is defined and app.session.get("app_menu_open") == 'MENU_USER' %}{{ ' menu-open ' }} {% endif %}">
+                            <a href="#" class="nav-link">
+                                <i class="far fa-user nav-icon"></i>
+                                <p>
+                                    Users
+                                    <i class="fas fa-angle-left right"></i>
+                                    {#<span class="badge badge-info right">2</span>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview ">
+                                <li class="nav-item">
+                                    <a href="{{ absolute_url(path('app_admin_user_all')) }}" class="nav-link {% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as('MENU_USER_ALL') %}{{ ' active ' }} {% endif %} ">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All users</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ absolute_url(path('app_admin_user_disable')) }}" class="nav-link{% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as ('MENU_USER_DISABLE') %}{{ ' active ' }} {% endif %}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Disable users</p>
+                                    </a>
+                                </li>
+                            </ul>
+
+                        </li>
+
+                        #}
+                        <li class="nav-item has-treeview {% if app.session.get("app_menu_open") is defined and app.session.get("app_menu_open") == 'MENU_CURRENCY' %}{{ 'menu-open' }} {% endif %}">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon fas  fa-money-bill-wave"></i>
+                                <p>
+                                    Currency
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ absolute_url(path('app_admin_currency_all')) }}" class="nav-link {% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as('MENU_CURRENCY_ALL' ) %}{{ ' active ' }} {% endif %}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All currency</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="{{ absolute_url(path('app_admin_currency_add')) }}" class="nav-link {% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as('MENU_CURRENCY_ADD' ) %}{{ ' active ' }} {% endif %}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>Creer</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="nav-item has-treeview {% if app.session.get("app_menu_open") is defined and app.session.get("app_menu_open") == 'MENU_CONVERSIONS' %}{{ 'menu-open' }} {% endif %}">
+                            <a href="{{ absolute_url(path('app_admin_conversion_all')) }}" class="nav-link">
+                                <i class="nav-icon far fa-calendar-alt"></i>
+                                <p>
+                                    Echanges
+                                </p>
+                            </a>
+                        </li>
+                        <li class="nav-item has-treeview {% if app.session.get("app_menu_open") is defined and app.session.get("app_menu_open") == 'MENU_NEWSLETTERS' %}{{ 'menu-open' }} {% endif %}">
+                            <a href="" class="nav-link">
+                                <i class="nav-icon far fa-envelope"></i>
+                                <p>
+                                    Newsletters
+                                    <i class="fas fa-angle-left right"></i>
+                                </p>
+                            </a>
+                            <ul class="nav nav-treeview">
+                                <li class="nav-item">
+                                    <a href="{{ absolute_url(path('app_admin_newsletters')) }}" class="nav-link {% if app.session.get("app_sub_menu_active") is defined and app.session.get("app_sub_menu_active") is same as('MENU_NEWSLETTERS_ALL' ) %}{{ ' active ' }} {% endif %}">
+                                        <i class="far fa-circle nav-icon"></i>
+                                        <p>All members</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+
+                    </ul>
+                </nav>
+                <!-- /.sidebar-menu -->
+            </div>
+            <!-- /.sidebar -->
+        </aside>
+    {% endblock %}
+    {% block body %}
+        <!-- Content Wrapper. Contains page content -->
+
+    {% endblock %}
+    <!-- /.content-wrapper -->
+    {% block footer %}
+        <footer class="main-footer">
+            <strong>Copyright &copy; {{ 'now' |date("Y") }} <a href="mailto:houessoupicasso@yahoo.fr">Picasso Houessou</a>.</strong>
+            All rights reserved.
+        </footer>
+    {% endblock %}
+
+</div>
+<!-- ./wrapper -->
+
+<!-- jQuery -->
+<script src="{{ absolute_url(asset('admin/plugins/jquery/jquery.min.js') ) }}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="{{ absolute_url(asset('admin/plugins/jquery-ui/jquery-ui.min.js') ) }}"></script>
+<!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
+<script>
+    $.widget.bridge('uibutton', $.ui.button)
+</script>
+<!-- Bootstrap 4 -->
+<script src="{{ absolute_url(asset('admin/plugins/bootstrap/js/bootstrap.bundle.min.js') ) }}"></script>
+
+<!-- Summernote -->
+<script src="{{ absolute_url(asset('admin/plugins/summernote/summernote-bs4.min.js') ) }}"></script>
+<!-- overlayScrollbars -->
+<script src="{{ absolute_url(asset('admin/plugins/overlayScrollbars/js/jquery.overlayScrollbars.min.js') ) }}"></script>
+
+<!-- DataTables -->
+<script src="{{ absolute_url(asset('admin/plugins/datatables/jquery.dataTables.min.js')) }}"></script>
+<script src="{{ absolute_url(asset('admin/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js')) }}"></script>
+<!-- AdminLTE App -->
+<script src="{{ absolute_url(asset('admin/dist/js/adminlte.min.js') ) }}"></script>
+<script src="{{ asset('vendors/vue/vue.js') }}"></script>
+<script src="{{ asset('vendors/axios/axios.js') }}"></script>
+<script src="{{ asset('vendors/vue-loading-overlay/vue-loading-overlay@3.js') }}"></script>
+<script>
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    }) ;
+</script>
+{# {{ encore_entry_script_tags('admin') }} #}
+{% block javascripts %}{% endblock %}
+</body>
+</html>

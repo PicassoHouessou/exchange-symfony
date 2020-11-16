@@ -1,0 +1,207 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block body %}
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
+                <div class="row mb-2">
+                    <div class="col-sm-6">
+                        <h1 class="m-0 text-dark">Tous les devises</h1>
+                    </div><!-- /.col -->
+                    <div class="col-sm-6">
+                        <ol class="breadcrumb float-sm-right">
+                            <li class="breadcrumb-item"><a href="#">Home</a></li>
+                            <li class="breadcrumb-item active">Devises</li>
+                        </ol>
+                    </div><!-- /.col -->
+                </div><!-- /.row -->
+            </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <div id="appUsers">
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-12">
+
+                        <div class="card" style="overflow: auto;">
+                            <div class="card-header">
+                                <h3 class="card-title">{% if pagination is not null %} Tous les devises  {% else %} Aucun devise {% endif %}</h3>
+                            </div>
+                            <!-- /.card-header -->
+                            <div class="card-body">
+                                <table id="usersData" class="table table-bordered table-hover dataTable">
+                                    <thead>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>label</th>
+                                        <th>taux en USD</th>
+                                        <th>Réserve</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for key,  currency in pagination %}
+
+                                        <tr>
+
+                                            <td>{{ currency.code }}</td>
+                                            <td>{{ currency.label }}</td>
+                                            <td>{{ currency.rate }}</td>
+                                            <td>{{ currency.reserve }}</td>
+
+                                            <td>
+                                                <a href="{{ absolute_url(url('app_admin_currency/edit', {'id': currency.id})) }}"><button type="button" id="{{ currency.id }}"
+                                                        class="btn btn-primary my-1 d-inline-flex btn-sm modal-button detailsButton"
+                                                        style="cursor:pointer;"><i class="fa fa-eye"></i></button>
+                                                </a>
+                                                <a href="{{ absolute_url(url('app_admin_currency_delete', {'id': currency.id})) }}"
+                                                   class="confirmRemoveButton">
+                                                    <button type="button"
+                                                            class="btn btn-danger btn-sm my-1 d-inline-flex"><i
+                                                                class="fa fa-trash"></i></button>
+                                                </a>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <th>Nom</th>
+                                        <th>label</th>
+                                        <th>taux en USD</th>
+                                        <th>Réserve</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                            <!-- /.card-body -->
+                            <div class="card-footer">
+                                {{ knp_pagination_render(pagination) }}
+                            </div>
+                        </div>
+                        <!-- /.card -->
+                    </div>
+                    <!-- /.col -->
+                </div>
+                <!-- /.row -->
+
+
+            </section>
+            <!-- /.content -->
+
+            <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="userContent" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="userContent"><b id="fullName"></b></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container-fluid">
+                                <div class="row">
+                                    <div class="col-md-4 mr-auto">
+                                        <div class="text-center">
+                                            <img class="profile-user-img img-fluid img-rounded"
+                                                 src="{{ asset('admin/dist/img/default-150x150.png' ) }}"
+                                                 alt="Profile picture" id="userAvatar">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8 border-left mr-auto text-left">
+                                        <ul class="p-0 m-0" style="list-style: none;">
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                Member since <span class="text-muted"
+                                                                   id="createdAt">user.createdAt </span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil has <span class="text-muted">no activity</span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil <span class="text-muted" id="isComplete"> complete</span>
+                                            </li>
+
+                                            <li>
+                                                <i class="fa fa-angle-right"></i>
+                                                This profil is <span class="text-success" id="isEnabled">Active</span>
+
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <form action="" method="post">
+                                <span>Change account status</span>
+                                <div class="custom-control custom-switch d-inline-block" id="accountStatusParent">
+                                    <input type="checkbox" class="custom-control-input " id="accountStatus">
+                                    <label class="custom-control-label" for="accountStatus"></label>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal" id="confirmRemoveModal" tabindex="-1" aria-hidden="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p>Etes vous sur de vouloir supprimer ?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Non</button>
+                            <button type="button" href="" id="confirmRemoveModalButton" class="btn btn-primary">Oui
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ./wrapper -->
+
+{% endblock %}
+
+{% block javascripts %}
+    <script>
+        var confirmRemoveButton = $('.confirmRemoveButton');
+        var confirmRemoveModalButton = $('#confirmRemoveModalButton');
+
+        var confirmRemoveModal = $('#confirmRemoveModal');
+
+
+        confirmRemoveButton.on('click', function (e) {
+            e.preventDefault();
+            removeURI = $(this).attr('href');
+
+            confirmRemoveModal.modal('show');
+        });
+
+        confirmRemoveModalButton.on('click', function (e) {
+            e.preventDefault();
+            confirmRemoveModal.modal('hide');
+
+            document.location.href = removeURI;
+
+        });
+    </script>
+{% endblock %}

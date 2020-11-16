@@ -1,0 +1,23 @@
+<form class="" method="get" action="" enctype="application/x-www-form-urlencoded">
+
+    <div class="">
+
+        {% if fields|length > 1 %}
+            <select class="form-control" name="{{ filterFieldName }}">
+                {% for field, label in fields %}
+                    <option value="{{ field }}"{% if selectedField == field %} selected="selected"{% endif %}>{{ label }}</option>
+                {% endfor %}
+            </select>
+        {% else %}
+            <input type="hidden" name="{{ filterFieldName }}" value="{{ fields|keys|first }}" />
+        {% endif %}
+
+        <input class="f1-s-1 cl6 plh9 s-full p-l-25 p-r-45" type="search" value="{{ selectedValue }}" name="{{ filterValueName }}" placeholder="{{ 'filter_searchword'|trans({}, 'KnpPaginatorBundle') }}" />
+
+        <button class="flex-c-c size-a-1 ab-t-r fs-20 cl2 hov-cl10 trans-03">
+            <i class="zmdi zmdi-search"></i>
+        </button>
+    </div>
+
+
+</form>

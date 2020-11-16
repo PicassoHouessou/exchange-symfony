@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Password Reset Email Sent{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid p-tb-80 border-bottom">
+        <div class="col-lg-12">
+            <h2 class="f1-l-5 txt-center cl2 p-b-10">
+                Créez votre nouveau mot de passe
+            </h2>
+        </div>
+    </div>
+
+    <!-- Password forgot step 1 ---  -->
+
+    <section class="bg0 p-tb-120">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-4 col-lg-5 p-b-80">
+                    <div class="p-r-10 p-r-0-sr991">
+                        <p>An email has been sent that contains a link that you can click to reset your password. This link will expire in {{ tokenLifetime|date('g') }} hour(s).</p>
+                        <p>If you don't receive an email please check your spam folder or <a class="lost_pass" href="{{ path('app_forgot_password_request') }}">try again</a>.</p>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

@@ -1,0 +1,103 @@
+# See dos how to configure the bundle: https://symfony.com/doc/current/bundles/LiipImagineBundle/basic-usage.html
+liip_imagine:
+    driver: "gd"
+    # configure resolvers
+    resolvers:
+        # setup the default resolver
+        default:
+            # use the default web path
+            web_path: ~
+
+    # your filter sets are defined here
+    filter_sets:
+        image_0x0:
+            quality: 10
+            filters:
+                thumbnail: { size: [0, 0], mode: inset }
+
+        user_avatar_120x90:
+            quality: 90
+            filters:
+                thumbnail: { size: [120, 90], mode: inset }
+
+        image_50x50:
+            quality: 90
+            filters:
+                thumbnail: { size: [50, 50], mode: inset}
+
+        image_100x50:
+            quality: 90
+            filters:
+                thumbnail: { size: [100, 50], mode: inset}
+
+        image_120x120:
+            quality: 90
+            filters:
+                thumbnail: { size: [120, 120], mode: inset }
+
+        project_photo_1024x550:
+            quality: 95
+            filters:
+                thumbnail: { size: [750, 300], mode: inset }
+
+        my_thumb:
+            quality: 90
+            filters:
+                # create a thumbnail: set size to 120x90 and use the "outbound" mode
+                # to crop the image when the size ratio of the input differs
+                thumbnail: { size: [120, 90], mode: outbound }
+
+                # create a 2px black border: center the thumbnail on a black background
+                # 4px larger to create a 2px border around the final image
+                background: { size: [124, 94], position: center, color: '#000000' }
+
+        big:
+            filters:
+                relative_resize:
+                    heighten: 800
+                    # Will allow smaller images to take 800px of height,
+                    # width will change accordingly since aspect ration is still valid.
+                    allow_upscale: true
+
+        # use the default cache configuration
+        cache: ~
+
+        # name our first filter set "my_ratio_down_scale_filter"
+        my_ratio_down_scale_filter:
+            filters:
+
+                # use and setup the "scale" filter
+                scale:
+
+                    # given 1920x1600px -> output 960x800px (relative down-scale)
+                    to: 0.5
+
+        # name our first filter set "my_ratio_up_scale_filter"
+        my_ratio_up_scale_filter:
+            filters:
+
+                # use and setup the "scale" filter
+                scale:
+
+                    # given 1920x1600px -> output 5760x3200px (relative up-scale)
+                    to: 2
+
+        # name our third filter set "my_dim_down_scale_filter"
+        my_dim_down_scale_filter:
+            filters:
+
+                # use and setup the "scale" filter
+                scale:
+
+                    # input 1200x1600px -> output 750x1000px (relative down-scale)
+                    dim: [ 800, 1000 ]
+
+        # name our fourth filter set "my_dim_up_scale_filter"
+        my_dim_up_scale_filter:
+            filters:
+
+                # use and setup the "scale" filter
+                scale:
+
+                    # input 300x900px -> output 900x2700px (relative up-scale)
+                    dim: [ 1200, 2700 ]
