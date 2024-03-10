@@ -8,6 +8,7 @@ use App\Entity\Admin;
 use App\Form\AdminRegistrationFormType;
 use App\Security\AdminLoginFormAuthenticator;
 use App\Security\EmailVerifier;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -19,21 +20,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class RegistrationController extends AbstractController
 {
     #[Route(path: '/admin/registration', name: 'app_admin_register')]
-    public function registration( Request $request, UserPasswordHasherInterface $passwordHasher,  AdminLoginFormAuthenticator $authenticator , SessionInterface $session, EmailVerifier $emailVerifier)
+    public function registration(Request $request, UserPasswordHasherInterface $passwordHasher, AdminLoginFormAuthenticator $authenticator, SessionInterface $session, EmailVerifier $emailVerifier, ManagerRegistry $managerRegistry)
     {
         $admin = new Admin();
 
-        $form = $this->get('form.factory')->createNamed('',AdminRegistrationFormType::class, $admin);
+        $form = $this->get('form.factory')->createNamed('', AdminRegistrationFormType::class, $admin);
 
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            $plainPassword = $form->get('plainPassword')->getData() ;
-            $confirmPlainPassword = $form->get('confirmPlainPassword')->getData() ;
+            $plainPassword = $form->get('plainPassword')->getData();
+            $confirmPlainPassword = $form->get('confirmPlainPassword')->getData();
 
-            if ($plainPassword !== $confirmPlainPassword)
-            {
+            if ($plainPassword !== $confirmPlainPassword) {
                 $this->addFlash('error', 'The passwords are not same');
                 return $this->render('admin/registration/register.html.twig', [
                     'registrationForm' => $form->createView(),
@@ -49,9 +49,9 @@ class RegistrationController extends AbstractController
             );
             $admin->setCreatedAt(new \DateTime());
 
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($admin);
-            $entityManager->flush();
+            $manager = $managerRegistry->getManager();
+            $manager->persist($admin);
+            $manager->flush();
 
             // generate a signed url and email it to the user
             $emailVerifier->sendEmailConfirmation('app_verify_email', $admin,
@@ -63,9 +63,9 @@ class RegistrationController extends AbstractController
             );
 
 
-            $session->set('registerEmail', $admin->getEmail()) ;
+            $session->set('registerEmail', $admin->getEmail());
 
-            return $this->redirectToRoute('app_register_confirm') ;
+            return $this->redirectToRoute('app_register_confirm');
         }
 
         return $this->render('admin/registration/register.html.twig', [

@@ -77,25 +77,6 @@ class SummaryMailSubscriber implements EventSubscriberInterface
                 ]);
         $this->mailer->send($email);
 
-        /*
-        $conversion = $event->getConversion() ;
-        $message = (new \Swift_Message(" Demande d'échange de devises"))
-            ->setFrom($this->noreplyEmail)
-            ->setTo($conversion->getEmail())
-            ->setBody(
-                $this->twig->render(
-                // templates/emails/registration.html.twig
-                    'emails/conversion.html.twig',
-                    [
-                        'conversion' => $conversion
-                    ]
-                ),
-                'text/html'
-            )
-        ;
-
-        $this->swiftMailer->send($message);
-*/
     }
 
 
@@ -103,7 +84,7 @@ class SummaryMailSubscriber implements EventSubscriberInterface
     {
         // TODO: Implement getSubscribedEvents() method.
         return [
-                //UserEvent::NEW_USER                 => 'onUserAdd',
+            //UserEvent::NEW_USER                 => 'onUserAdd',
             NewslettersEvent::NEWSLETTERS_ADD => 'onNewsletterAdd',
             ConversionEvent::CONVERSION_REQUEST => 'onConversionDo',
 

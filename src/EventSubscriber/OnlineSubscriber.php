@@ -11,59 +11,54 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class OnlineSubscriber implements EventSubscriberInterface
 {
-    public const UPDATE_TIME = 30 ;
-    protected $online ;
-    protected $onlineRepository ;
-    protected $manager ;
+    public const UPDATE_TIME = 30;
+    protected $online;
+    protected $onlineRepository;
+    protected $manager;
+
     public function __construct(OnlineRepository $onlineRepository, ObjectManager $manager)
     {
-        $this->online = new Online() ;
-        $this->onlineRepository = $onlineRepository ;
+        $this->online = new Online();
+        $this->onlineRepository = $onlineRepository;
 
-        $this->manager = $manager ;
+        $this->manager = $manager;
     }
 
     public function onKernelTerminate(TerminateEvent $event)
     {
-        $request =  $event->getRequest();
+        $request = $event->getRequest();
 
         $ip = $request->getClientIp();
 
-        $time = date('H:i:s',time() + self::UPDATE_TIME ) ;
-        $sessionTime = new \DateTime( $time) ;
-        //dump(date('g:i:s A', $sessionTime->getTimestamp() )) ;
-        $currentTime = new \DateTime() ;
+        $time = date('H:i:s', time() + self::UPDATE_TIME);
+        $sessionTime = new \DateTime($time);
+        $currentTime = new \DateTime();
 
-        $online = $this->manager->getRepository(Online::class)->findOneBy(['ipUser'=>$ip]) ;
-        if ($online)
-        {
-            $online->setInsertedAt($currentTime) ;
+        $online = $this->manager->getRepository(Online::class)->findOneBy(['ipUser' => $ip]);
+        if ($online) {
+            $online->setInsertedAt($currentTime);
             $this->manager->persist($online);
         } else {
-            $this->online->setIpUser($ip) ;
+            $this->online->setIpUser($ip);
             $this->online->setInsertedAt($currentTime);
             $this->manager->persist($this->online);
         }
         $this->manager->flush();
 
-        $onlines = $this->manager->getRepository(Online::class)->findAll() ;
+        $onlines = $this->manager->getRepository(Online::class)->findAll();
 
-        if ($onlines)
-        {
-            $i = 0 ;
-            
-            $pastTime = time() + $currentTime->getTimestamp() - $sessionTime->getTimestamp() ;
-            foreach ($onlines as $online )
-            {
-                if($online->getInsertedAt()->getTimestamp() < $pastTime)
-                {
+        if ($onlines) {
+            $i = 0;
+
+            $pastTime = time() + $currentTime->getTimestamp() - $sessionTime->getTimestamp();
+            foreach ($onlines as $online) {
+                if ($online->getInsertedAt()->getTimestamp() < $pastTime) {
                     $this->manager->remove($online);
-                    $i++ ;
+                    $i++;
                 }
 
                 //Si on a trop de requetes on flush
-                if ($i >= 100)
-                {
+                if ($i >= 100) {
                     $this->manager->flush();
                 }
 

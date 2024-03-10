@@ -9,10 +9,8 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class AdminFixtures extends Fixture
 {
-    protected $passwordEncoder;
-    public function __construct(UserPasswordHasherInterface $passwordEncoder)
+    public function __construct(private UserPasswordHasherInterface $passwordHasher)
     {
-        $this->passwordEncoder = $passwordEncoder;
     }
 
     public function load(ObjectManager $manager)
@@ -20,7 +18,7 @@ class AdminFixtures extends Fixture
         $admin2 = new Admin();
         $admin2->setEmail('admin@admin.com');
         $admin2->setCreatedAt(new \DateTime());
-        $admin2->setPassword($this->passwordEncoder->hashPassword($admin2, 'admin'));
+        $admin2->setPassword($this->passwordHasher->hashPassword($admin2, 'admin'));
         $admin2->setRoles(['ROLE_ADMIN']);
         $manager->persist($admin2);
         $manager->flush();

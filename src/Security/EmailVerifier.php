@@ -2,7 +2,7 @@
 
 namespace App\Security;
 
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Mailer\MailerInterface;
@@ -13,7 +13,7 @@ use Twig\Environment;
 
 class EmailVerifier
 {
-    public function __construct(private readonly VerifyEmailHelperInterface $verifyEmailHelper, private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly EntityManagerInterface $entityManager)
+    public function __construct(private readonly VerifyEmailHelperInterface $verifyEmailHelper, private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly ManagerRegistry $managerRegistry)
     {
     }
 
@@ -43,8 +43,8 @@ class EmailVerifier
         $this->verifyEmailHelper->validateEmailConfirmation($request->getUri(), $user->getId(), $user->getEmail());
 
         $user->setIsVerified(true);
-
-        $this->entityManager->persist($user);
-        $this->entityManager->flush();
+        $manager = $this->managerRegistry->getManager();
+        $manager->persist($user);
+        $manager->flush();
     }
 }
