@@ -3,49 +3,45 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
-    no-reply_email: 'no-reply@exchange-symfony.picassohouessou.com'
-    master_email: 'master@exchange-symfony.picassohouessou.com'
-    support_email: 'support@exchange-symfony.picassohouessou.com'
-    contact: ''
+    no-reply_email: "no-reply@exchange-symfony.picassohouessou.com"
+    master_email: "master@exchange-symfony.picassohouessou.com"
+    support_email: "support@exchange-symfony.picassohouessou.com"
+    contact: ""
     #knp_paginator.template.pagination: 'appbundle/bootstrap_v4_filtration.html.twig'
 
 services:
     # default configuration for services in *this* file
     _defaults:
-        autowire: true      # Automatically injects dependencies in your services.
+        autowire: true # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
         bind:
-            $noreplyEmail: '%no-reply_email%'
-            $supportEmail: '%support_email%'
-            $projectDirectory: '%kernel.project_dir%'
+            $noreplyEmail: "%no-reply_email%"
+            $supportEmail: "%support_email%"
+            $projectDirectory: "%kernel.project_dir%"
 
     # makes classes in src/ available to be used as services
     # this creates a service per class whose id is the fully-qualified class name
     App\:
-        resource: '../src/'
+        resource: "../src/"
         exclude:
-            - '../src/DependencyInjection/'
-            - '../src/Entity/'
-            - '../src/Kernel.php'
-            - '../src/Tests/'
+            - "../src/DependencyInjection/"
+            - "../src/Entity/"
+            - "../src/Kernel.php"
+            - "../src/Tests/"
 
     # controllers are imported separately to make sure services can be injected
     # as action arguments even if you don't extend any base controller class
     App\Controller\:
-        resource: '../src/Controller/'
-        tags: ['controller.service_arguments']
+        resource: "../src/Controller/"
+        tags: ["controller.service_arguments"]
 
-    Doctrine\Persistence\ObjectManager: '@doctrine.orm.default_entity_manager'
+    Doctrine\Persistence\ObjectManager: "@doctrine.orm.default_entity_manager"
 
     # I use this When I write my own twig extension
-    Symfony\Bridge\Twig\Extension\AssetExtension: '@twig.extension.assets'
-
-
-
+    Symfony\Bridge\Twig\Extension\AssetExtension: "@twig.extension.assets"
 #    App\EventSubscriber\OnlineSubscriber:
 #        tags:
 #            - { name: kernel.event_listener, event: kernel.terminate }
 
-
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+# add more service definitions when explicit configuration is needed
+# please note that last definitions always *replace* previous ones
