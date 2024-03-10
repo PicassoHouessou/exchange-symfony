@@ -100,7 +100,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     {
         return (string)$this->email;
     }
-    
+
 
     public function getInfo(): ?UserInfo
     {
@@ -211,4 +211,8 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 
+    public function eraseCredentials(): void
+    {
+        // TODO: Implement eraseCredentials() method.
+    }
 }
