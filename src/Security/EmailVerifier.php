@@ -16,14 +16,13 @@ class EmailVerifier
     private $verifyEmailHelper;
     private $mailer;
     private $entityManager;
-    private $swiftMailer ;
+
     private  $twig;
 
-    public function __construct(VerifyEmailHelperInterface $helper, \Swift_Mailer $swiftMailer, MailerInterface $mailer, Environment $twig, EntityManagerInterface $manager)
+    public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer, Environment $twig, EntityManagerInterface $manager)
     {
         $this->verifyEmailHelper = $helper;
         $this->mailer = $mailer;
-        $this->swiftMailer = $swiftMailer ;
         $this->entityManager = $manager;
         $this->twig = $twig ;
     }
@@ -45,27 +44,6 @@ class EmailVerifier
         $this->mailer->send($email);
     }
 
-    public function sendEmailConfirmationWithSwiftMailer(string $verifyEmailRouteName, UserInterface $user, \Swift_Message $message, string $template): void
-    {
-        $signatureComponents = $this->verifyEmailHelper->generateSignature(
-            $verifyEmailRouteName,
-            $user->getId(),
-            $user->getEmail()
-        );
-
-        $message->setBody(
-            $this->twig->render(
-                $template,
-                [
-                    'signedUrl' => $signatureComponents->getSignedUrl() ,
-                    'expiresAt' => $signatureComponents->getExpiresAt()
-                ]
-            ),
-            'text/html'
-        ) ;
-
-        $this->swiftMailer->send($message);
-    }
 
     /**
      * @throws VerifyEmailExceptionInterface

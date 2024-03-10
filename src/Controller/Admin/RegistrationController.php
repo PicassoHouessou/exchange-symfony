@@ -8,12 +8,13 @@ use App\Entity\Admin;
 use App\Form\AdminRegistrationFormType;
 use App\Security\AdminLoginFormAuthenticator;
 use App\Security\EmailVerifier;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Mime\Address;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-use Symfony\Component\Security\Guard\GuardAuthenticatorHandler;
 
 class RegistrationController extends AbstractController
 {
@@ -21,7 +22,7 @@ class RegistrationController extends AbstractController
      * @Route("/admin/registration", name="app_admin_register")
      */
 
-    public function registration( Request $request, UserPasswordEncoderInterface $passwordEncoder, GuardAuthenticatorHandler $guardHandler, AdminLoginFormAuthenticator $authenticator , SessionInterface $session, EmailVerifier $emailVerifier)
+    public function registration( Request $request, UserPasswordHasherInterface $passwordHasher,  AdminLoginFormAuthenticator $authenticator , SessionInterface $session, EmailVerifier $emailVerifier)
     {
         $admin = new Admin();
 
@@ -44,7 +45,7 @@ class RegistrationController extends AbstractController
 
             // encode the plain password
             $admin->setPassword(
-                $passwordEncoder->encodePassword(
+                $passwordHasher->hashPassword(
                     $admin,
                     $form->get('plainPassword')->getData()
                 )
@@ -56,19 +57,13 @@ class RegistrationController extends AbstractController
             $entityManager->flush();
 
             // generate a signed url and email it to the user
-//            $emailVerifier->sendEmailConfirmation('app_verify_email', $admin,
-//                (new TemplatedEmail())
-//                    ->from(new Address('no-reply@dmvinvestmentgroup.com', 'No reply DMV'))
-//                    ->to($admin->getEmail())
-//                    ->subject('Please Confirm your Email')
-//                    ->htmlTemplate('registration/confirmation_email.html.twig')
-//            );
-
-            $file = 'registration/confirmation_email.html.twig' ;
-            $emailVerifier->sendEmailConfirmationWithSwiftMailer('app_verify_email', $admin,
-                (new \Swift_Message('Please Confirm your Email'))
-                    ->setFrom('no-reply@dmvinvestmentgroup.com')
-                    ->setTo($admin->getEmail()) , $file) ;
+            $emailVerifier->sendEmailConfirmation('app_verify_email', $admin,
+                (new TemplatedEmail())
+                    ->from(new Address('no-reply@dmvinvestmentgroup.com', 'No reply DMV'))
+                    ->to($admin->getEmail())
+                    ->subject('Please Confirm your Email')
+                    ->htmlTemplate('registration/confirmation_email.html.twig')
+            );
 
 
             $session->set('registerEmail', $admin->getEmail()) ;
