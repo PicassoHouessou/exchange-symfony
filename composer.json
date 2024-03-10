@@ -7,22 +7,21 @@
         "php": ">=7.2.5",
         "ext-ctype": "*",
         "ext-iconv": "*",
-        "cocur/slugify": "^4.0",
         "composer/package-versions-deprecated": "^1.11",
         "doctrine/doctrine-bundle": "^2.1",
         "doctrine/doctrine-migrations-bundle": "^3.0",
         "doctrine/orm": "^2.7",
         "friendsofsymfony/ckeditor-bundle": "^2.2",
-        "helios-ag/fm-elfinder-bundle": "^10.0",
         "knplabs/knp-gaufrette-bundle": "^0.7.1",
         "knplabs/knp-paginator-bundle": "^5.3",
         "liip/imagine-bundle": "^2.3",
-        "sensio/framework-extra-bundle": "^5.1",
+        "phpdocumentor/reflection-docblock": "^5.3",
+        "phpstan/phpdoc-parser": "^1.26",
         "symfony/apache-pack": "^1.0",
-        "symfony/asset": "5.1.*",
+        "symfony/asset": "6.4.*",
         "symfony/console": "*",
-        "symfony/debug-bundle": "5.1.*",
-        "symfony/doctrine-messenger": "5.1.*",
+        "symfony/debug-bundle": "6.4.*",
+        "symfony/doctrine-messenger": "6.4.*",
         "symfony/dotenv": "*",
         "symfony/expression-language": "*",
         "symfony/flex": "^1.3.1",
@@ -30,36 +29,41 @@
         "symfony/framework-bundle": "*",
         "symfony/http-client": "*",
         "symfony/intl": "*",
-        "symfony/mailer": "5.1.*",
-        "symfony/messenger": "5.1.*",
+        "symfony/mailer": "6.4.*",
+        "symfony/messenger": "6.4.*",
         "symfony/mime": "*",
         "symfony/monolog-bundle": "^3.1",
         "symfony/notifier": "*",
         "symfony/process": "*",
+        "symfony/property-access": "6.4.*",
+        "symfony/property-info": "6.4.*",
         "symfony/security-bundle": "*",
-        "symfony/security-csrf": "5.1.*",
-        "symfony/serializer-pack": "*",
-        "symfony/stopwatch": "5.1.*",
+        "symfony/security-csrf": "6.4.*",
+        "symfony/serializer": "6.4.*",
+        "symfony/stopwatch": "6.4.*",
         "symfony/string": "*",
-        "symfony/swiftmailer-bundle": "^3.5",
         "symfony/translation": "*",
-        "symfony/twig-bundle": "5.1.*",
-        "symfony/twig-pack": "*",
+        "symfony/twig-bundle": "6.4.*",
         "symfony/validator": "*",
-        "symfony/var-dumper": "5.1.*",
+        "symfony/var-dumper": "6.4.*",
         "symfony/web-link": "*",
-        "symfony/web-profiler-bundle": "5.1.*",
+        "symfony/web-profiler-bundle": "6.4.*",
         "symfony/yaml": "*",
         "symfonycasts/reset-password-bundle": "^1.1",
         "symfonycasts/verify-email-bundle": "^1.0",
+        "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.1",
         "twig/string-extra": "^3.0",
+        "twig/twig": "^2.12|^3.0",
         "vich/uploader-bundle": "^1.15"
     },
     "require-dev": {
         "doctrine/doctrine-fixtures-bundle": "^3.3",
+        "phpunit/phpunit": "^9.5",
+        "symfony/browser-kit": "6.4.*",
+        "symfony/css-selector": "6.4.*",
         "symfony/maker-bundle": "^1.0",
-        "symfony/test-pack": "*"
+        "symfony/phpunit-bridge": "^7.0"
     },
     "config": {
         "optimize-autoloader": true,
@@ -93,8 +97,7 @@
     "scripts": {
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
-            "assets:install %PUBLIC_DIR%": "symfony-cmd",
-            "elfinder:install": "symfony-cmd"
+            "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "post-install-cmd": [
             "@auto-scripts"
@@ -109,7 +112,7 @@
     "extra": {
         "symfony": {
             "allow-contrib": "true",
-            "require": "5.1.*"
+            "require": "6.4.*"
         }
     }
 }

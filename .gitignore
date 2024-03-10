@@ -43,3 +43,8 @@ yarn-error.log
 /.vscode/
 ### My Personnal library vendors ###
 
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###

@@ -8,7 +8,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\UserInterface;
-use Symfony\Component\Validator\Constraints as Assert ;
+use Symfony\Component\Validator\Constraints as Assert;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 
 /**
@@ -79,7 +79,7 @@ class User implements UserInterface
 
     public function __construct()
     {
-        $this->notifications = new ArrayCollection() ;
+        $this->notifications = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -131,6 +131,10 @@ class User implements UserInterface
         // TODO: Implement getUsername() method.
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
     public function eraseCredentials()
     {
         // TODO: Implement eraseCredentials() method.
@@ -198,7 +202,7 @@ class User implements UserInterface
 
     public function setIsEnabled(?bool $isEnabled): self
     {
-        $this->isEnabled =  (isset( $isEnabled) && $isEnabled !== null ) ? $isEnabled : false ;
+        $this->isEnabled = (isset($isEnabled) && $isEnabled !== null) ? $isEnabled : false;
 
         return $this;
     }
@@ -235,13 +239,12 @@ class User implements UserInterface
         return $this;
     }
 
-    public function hasNotification() : bool
+    public function hasNotification(): bool
     {
-        if ($this->notifications !== null)
-        {
-            return  true ;
+        if ($this->notifications !== null) {
+            return true;
         }
-        return false ;
+        return false;
 
     }
 

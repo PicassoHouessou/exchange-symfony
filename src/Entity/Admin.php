@@ -24,9 +24,9 @@ class Admin implements UserInterface
 
     static $ROLES_DEFINED =
         [
-            'ROLE_MODERATOR' =>  'Moderator',
-            'ROLE_ADMIN' =>  'Admin',
-             'ROLE_SUPER_ADMIN' => 'Super Admin',
+            'ROLE_MODERATOR' => 'Moderator',
+            'ROLE_ADMIN' => 'Admin',
+            'ROLE_SUPER_ADMIN' => 'Super Admin',
         ];
 
     /**
@@ -46,7 +46,7 @@ class Admin implements UserInterface
     /**
      * @ORM\Column(type="json")
      */
-    private $roles =[] ;
+    private $roles = [];
 
     /**
      * @var string The hashed password
@@ -108,6 +108,10 @@ class Admin implements UserInterface
         return (string) $this->email;
     }
 
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->email;
+    }
     /**
      * @see UserInterface
      */
@@ -122,17 +126,17 @@ class Admin implements UserInterface
 
     public function getRolesToString(): string
     {
-        $roles = $this->getRoles() ;
-        $chain = [] ;
+        $roles = $this->getRoles();
+        $chain = [];
 
         foreach ($roles as $value) {
 
             if (array_key_exists($value, self::$ROLES_DEFINED)) {
-                $chain [] = self::$ROLES_DEFINED[$value] ;
+                $chain[] = self::$ROLES_DEFINED[$value];
             }
         }
 
-        return substr_replace( implode(', ', $chain) , '', -2, 0)  ;
+        return substr_replace(implode(', ', $chain), '', -2, 0);
 
 
 
@@ -140,7 +144,7 @@ class Admin implements UserInterface
 
     public function setRoles(array $roles): self
     {
-        $this->roles = $roles; 
+        $this->roles = $roles;
 
         return $this;
     }
