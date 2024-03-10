@@ -11,7 +11,7 @@ use Symfony\Contracts\Service\ServiceSubscriberInterface;
 
 class NewslettersEvent extends Event
 {
-    const NEWSLETTERS_ADD = 'newsletters.add';
+    public const NEWSLETTERS_ADD = 'newsletters.add';
     protected $newsletters;
 
     public function __construct(Newsletters $newsletters)

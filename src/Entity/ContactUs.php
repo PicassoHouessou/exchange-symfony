@@ -6,55 +6,43 @@ use App\Repository\ContactUsRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ContactUsRepository::class)
- */
+#[ORM\Entity(repositoryClass: ContactUsRepository::class)]
 class ContactUs
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=210)
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(max="210")
-     */
+    #[ORM\Column(type: 'string', length: 210)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: '210')]
     private $subject;
 
-    /**
-     * @ORM\Column(type="text")
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(max="5000")
-     */
+    #[ORM\Column(type: 'text')]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: '5000')]
     private $message;
 
-    /**
-     * @ORM\Column(type="string", length=210)
-     * @Assert\Email()
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(max="210")
-     */
+    #[ORM\Column(type: 'string', length: 210)]
+    #[Assert\Email]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: '210')]
     private $email;
 
     /**
-     * @ORM\Column(type="datetime")
      * @var \DateTimeInterface|null
      */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string", length=210)
-     * @Assert\NotNull()
-     * @Assert\NotBlank()
-     * @Assert\Length(max="210")
-     */
+    #[ORM\Column(type: 'string', length: 210)]
+    #[Assert\NotNull]
+    #[Assert\NotBlank]
+    #[Assert\Length(max: '210')]
     private $sender;
 
     public function getId(): ?int

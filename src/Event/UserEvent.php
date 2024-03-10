@@ -9,8 +9,8 @@ use Symfony\Contracts\EventDispatcher\Event;
 class UserEvent extends Event
 {
 
-    const NEW_USER = 'user.add' ;
-    const PROJECT_INVEST = 'user.invest' ;
+    public const NEW_USER = 'user.add' ;
+    public const PROJECT_INVEST = 'user.invest' ;
 
     protected $user ;
 

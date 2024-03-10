@@ -18,9 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CurrencyController extends AbstractController
 {
 
-    /**
-     * @Route("/admin/currency/all" , name="app_admin_currency_all")
-     */
+    #[Route(path: '/admin/currency/all', name: 'app_admin_currency_all')]
     public function all(Request $request, CurrencyRepository $currencyRepository, PaginatorInterface $paginator, SessionInterface $session)
     {
         $session->set('app_menu_open', "MENU_CURRENCY");
@@ -43,10 +41,7 @@ class CurrencyController extends AbstractController
     }
 
 
-    /**
-     * @Route("/admin/currency/add", name ="app_admin_currency_add")
-     */
-
+    #[Route(path: '/admin/currency/add', name: 'app_admin_currency_add')]
     public function add (Request $request, SessionInterface $session)
     {
         $session->set('app_menu_open', "MENU_CURRENCY");
@@ -73,9 +68,7 @@ class CurrencyController extends AbstractController
         ]) ;
     }
 
-    /**
-     * @Route("/admin/currency/edit/{id}" , name= "app_admin_currency/edit")
-     */
+    #[Route(path: '/admin/currency/edit/{id}', name: 'app_admin_currency/edit')]
     public function edit (Request $request , Currency $currency)
     {
         $form = $this->createForm(CurrencyType::class, $currency) ;
@@ -104,10 +97,7 @@ class CurrencyController extends AbstractController
 
     }
 
-    /**
-     * @Route("/admin/currency/delete/{id}", name="app_admin_currency_delete")
-     */
-
+    #[Route(path: '/admin/currency/delete/{id}', name: 'app_admin_currency_delete')]
     public function delete (Currency $currency , ObjectManager $manager)
     {
         $manager->remove($currency) ;
@@ -118,10 +108,7 @@ class CurrencyController extends AbstractController
         return $this->redirectToRoute('app_admin') ;
     }
 
-    /**
-     * @Route("/admin/exchange", name="app_admin_conversion_all")
-     */
-
+    #[Route(path: '/admin/exchange', name: 'app_admin_conversion_all')]
     public function conversion(Request $request , ConversionRepository $conversionRepository, PaginatorInterface $paginator)
     {
         $page = $request->query->getInt('page', 1 ) ;
@@ -133,10 +120,7 @@ class CurrencyController extends AbstractController
         ]) ;
     }
 
-    /**
-     * @Route("/admin/conversion/delete/{id}", name="app_admin_conversion_delete")
-     */
-
+    #[Route(path: '/admin/conversion/delete/{id}', name: 'app_admin_conversion_delete')]
     public function deleteConversion(Conversion $conversion , ObjectManager $manager)
     {
         $manager->remove($conversion);

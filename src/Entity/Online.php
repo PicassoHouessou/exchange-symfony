@@ -5,26 +5,18 @@ namespace App\Entity;
 use App\Repository\OnlineRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-/**
- * @ORM\Entity(repositoryClass=OnlineRepository::class)
- */
+#[ORM\Entity(repositoryClass: OnlineRepository::class)]
 class Online
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=210)
-     */
+    #[ORM\Column(type: 'string', length: 210)]
     private $ipUser;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $insertedAt;
 
     public function getId(): ?int

@@ -8,10 +8,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 class ResetPasswordFormModel
 {
-    /**
-     * @Assert\NotNull(message="Please enter a password")
-     */
-
+    #[Assert\NotNull(message: 'Please enter a password')]
     public $plainPassword;
 
     /**

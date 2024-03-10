@@ -13,13 +13,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
 /**
- * @ORM\Entity(repositoryClass=AdminRepository::class)
- * @UniqueEntity(
- *     fields={"email"},
- *     message="This login exists"
- * )
  * @Vich\Uploadable()
  */
+#[ORM\Entity(repositoryClass: AdminRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'This login exists')]
 class Admin implements UserInterface,PasswordAuthenticatedUserInterface
 {
 
@@ -30,56 +27,42 @@ class Admin implements UserInterface,PasswordAuthenticatedUserInterface
             'ROLE_SUPER_ADMIN' => 'Super Admin',
         ];
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     * @Assert\NotNull()
-     * @Assert\Email()
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
+    #[Assert\NotNull]
+    #[Assert\Email]
     private $email;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string", length=210)
      */
+    #[ORM\Column(type: 'string', length: 210)]
     private $password;
 
-    /**
-     * @ORM\Column(type="string", length=210, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
     private $fullName;
 
     /**
-     * @Assert\File(maxSize="2M", mimeTypes={ "image/png", "image/jpeg" })
      * @Vich\UploadableField(mapping="admin_avatar", fileNameProperty="avatarName")
      *
      */
+    #[Assert\File(maxSize: '2M', mimeTypes: ['image/png', 'image/jpeg'])]
     private $avatarFile;
 
-    /**
-     * @ORM\Column(type="string", length=210, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
     private $avatarName;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
     public function getId(): ?int

@@ -20,18 +20,13 @@ use SymfonyCasts\Bundle\ResetPassword\Exception\TooManyPasswordRequestsException
 use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
 use Twig\Environment;
 
-/**
- * @Route("/reset-admin-password")
- */
+#[Route(path: '/reset-admin-password')]
 class ResetPasswordController extends AbstractController
 {
     use ResetPasswordControllerTrait;
 
-    private $resetPasswordHelper;
-
-    public function __construct(ResetPasswordHelperInterface $resetPasswordHelper,  $noreplyEmail , Environment $twig)
+    public function __construct(private ResetPasswordHelperInterface $resetPasswordHelper,  $noreplyEmail , Environment $twig)
     {
-        $this->resetPasswordHelper = $resetPasswordHelper;
         $this->sender = $noreplyEmail ;
         $this->twig = $twig ;
         //$this->resetPasswordHelper->
@@ -39,9 +34,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Display & process form to request a password reset.
-     *
-     * @Route("", name="app_admin_forgot_password_request")
      */
+    #[Route(path: '', name: 'app_admin_forgot_password_request')]
     public function request(Request $request, MailerInterface $mailer, \Swift_Mailer $swift_Mailer): Response
     {
         $form = $this->createForm(ResetPasswordRequestFormType::class);
@@ -61,9 +55,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Confirmation page after a user has requested a password reset.
-     *
-     * @Route("/check-email", name="app_admin_check_email")
      */
+    #[Route(path: '/check-email', name: 'app_admin_check_email')]
     public function checkEmail(): Response
     {
         // We prevent users from directly accessing this page
@@ -78,9 +71,8 @@ class ResetPasswordController extends AbstractController
 
     /**
      * Validates and process the reset URL that the user clicked in their email.
-     *
-     * @Route("/reset/{token}", name="app_admin_reset_password")
      */
+    #[Route(path: '/reset/{token}', name: 'app_admin_reset_password')]
     public function reset(Request $request, UserPasswordEncoderInterface $passwordEncoder, string $token = null): Response
     {
         if ($token) {

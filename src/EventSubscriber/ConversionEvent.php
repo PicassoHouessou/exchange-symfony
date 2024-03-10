@@ -8,7 +8,7 @@ use Symfony\Contracts\EventDispatcher\Event;
 
 class ConversionEvent extends Event
 {
-    const CONVERSION_REQUEST = 'conversion.add';
+    public const CONVERSION_REQUEST = 'conversion.add';
     protected $conversion;
 
     public function __construct(Conversion $conversion)

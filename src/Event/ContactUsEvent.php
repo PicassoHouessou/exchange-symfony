@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class ContactUsEvent
 {
-    const SEND = 'contactUs.send';
+    public const SEND = 'contactUs.send';
 
     protected $contactUs;
     protected $user;

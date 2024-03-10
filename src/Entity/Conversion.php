@@ -6,60 +6,50 @@ use App\Repository\ConversionRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=ConversionRepository::class)
- */
+#[ORM\Entity(repositoryClass: ConversionRepository::class)]
 class Conversion
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
      * @Assert\Sequentially(
      *     @Assert\NotBlank(),
      *     @Assert\Length(max="30")
      * )
      */
+    #[ORM\Column(type: 'string', length: 100)]
     private $number;
 
     /**
-     * @ORM\Column(type="string", length=150)
      * @Assert\Sequentially(
      *     @Assert\NotNull(),
      *     @Assert\Length(max="149"),
      *     @Assert\Email()
      * )
      */
+    #[ORM\Column(type: 'string', length: 150)]
     private $email;
 
     /**
-     * @ORM\Column(type="string", length=150)
      * @Assert\Sequentially(
      *     @Assert\NotBlank(),
      *     @Assert\Length(max="149")
      * )
      */
+    #[ORM\Column(type: 'string', length: 150)]
     private $fullName;
 
-    /**
-     * @ORM\Column(type="datetime")
-     * @Assert\DateTime()
-     */
+    #[ORM\Column(type: 'datetime')]
+    #[Assert\DateTime]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
+    #[ORM\Column(type: 'string', length: 150)]
     private $currencyFrom;
 
-    /**
-     * @ORM\Column(type="string", length=150)
-     */
+    #[ORM\Column(type: 'string', length: 150)]
     private $currencyTo;
 
     public function getId(): ?int

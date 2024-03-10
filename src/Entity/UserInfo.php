@@ -11,9 +11,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 /**
- * @ORM\Entity(repositoryClass=UserInfoRepository::class)
  * @Vich\Uploadable()
  */
+#[ORM\Entity(repositoryClass: UserInfoRepository::class)]
 class UserInfo implements \Serializable
 {
     public const GENDER_MALE = 'M';
@@ -22,121 +22,104 @@ class UserInfo implements \Serializable
     public const MAIN_ACTIVITY_ENTREPENOR = 'entrepenor' ;
     public const MAIN_ACTIVITY_INVESTOR = 'investor' ;
 
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=210, nullable=true)
      * @Assert\Sequentially(
      *     @Assert\NotNull(),
      *     @Assert\Length(max="210")
      * )
      */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
     private $mainActivity;
 
     /**
-     * @ORM\Column(type="string", length=210)
      * @Assert\Sequentially({
      *     @Assert\NotNull(),
      *     @Assert\NotBlank(),
      *     @Assert\Length(max="210")
      * })
      */
+    #[ORM\Column(type: 'string', length: 210)]
     private $firstName;
 
     /**
-     * @ORM\Column(type="string", length=210)
      * @Assert\Sequentially({
      *     @Assert\NotNull(),
      *     @Assert\NotBlank(),
      *     @Assert\Length(max="210")
      * })
      */
+    #[ORM\Column(type: 'string', length: 210)]
     private $lastName;
 //, groups={"registration"}
     /**
      * NOTE: This is not a mapped field of entity metadata, just a simple property.
      *
      * @Vich\UploadableField(mapping="user_avatar", fileNameProperty="avatarName")
-     * @Assert\File( maxSize="3M",mimeTypes={ "image/png", "image/jpeg" } )
      * @var File|null
      */
+    #[Assert\File(maxSize: '3M', mimeTypes: ['image/png', 'image/jpeg'])]
     private $avatarFile;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
      * @var string|null
      */
+    #[ORM\Column(type: 'string', nullable: true)]
     private $avatarName;
 
-    /**
-     * @ORM\OneToOne(targetEntity=User::class, mappedBy="info", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: User::class, mappedBy: 'info', cascade: ['persist', 'remove'])]
     private $user;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
      * @Assert\Sequentially(
      *     @Assert\NotNull(),
      *     @Assert\Length(max="210")
      * )
      */
+    #[ORM\Column(type: 'integer', nullable: true)]
     private $phoneNumber;
     /**
-     * @ORM\Column(type="datetime",nullable=true)
      * @var \DateTimeInterface|null
      */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\Column(type="string", length=210, nullable=true)
-     * @Assert\Length(max="210")
-     */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
+    #[Assert\Length(max: '210')]
     private $country;
 
-    /**
-     * @ORM\Column(type="string", length=210, nullable=true)
-     * @Assert\Length(max="210")
-     */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
+    #[Assert\Length(max: '210')]
     private $city;
 
-    /**
-     * @ORM\Column(type="datetime", length=210, nullable=true)
-     * @Assert\Type("\DateTimeInterface")
-     */
+    #[ORM\Column(type: 'datetime', length: 210, nullable: true)]
+    #[Assert\Type('\DateTimeInterface')]
     private $birthday;
 
     /**
      * ORM\Column(type="string", length=210, nullable=true)
      * Assert\Length(max="210")
-
+    
     private $profession;
     */
-
-    /**
-     * @ORM\Column(type="string", length=210, nullable=true)
-     *  @Assert\Sequentially({
+    /** @Assert\Sequentially({
      *     @Assert\NotNull(),
      *     @Assert\NotBlank(),
      *     @Assert\Length(max="100")
      * })
      */
+    #[ORM\Column(type: 'string', length: 210, nullable: true)]
     private $gender;
 
-    /**
-     * @ORM\Column(type="boolean", nullable=true)
-     * )
-     */
+    #[ORM\Column(type: 'boolean', nullable: true)]
     private $hasCompany;
 
-    /**
-     * @ORM\Column(type="text", nullable=true)
-     *
-     */
+    
+    #[ORM\Column(type: 'text', nullable: true)]
     private $bio;
 
 
@@ -266,17 +249,13 @@ class UserInfo implements \Serializable
     /** @see \Serializable::serialize() */
     public function serialize()
     {
-        return serialize(array(
-            $this->id
-        ));
+        return serialize([$this->id]);
     }
 
     /** @see \Serializable::unserialize() */
     public function unserialize($serialized)
     {
-        list (
-            $this->id
-            ) = unserialize($serialized, array('allowed_classes' => false));
+        [$this->id] = unserialize($serialized, ['allowed_classes' => false]);
     }
 
     public function getCountry(): ?string

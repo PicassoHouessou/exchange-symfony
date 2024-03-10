@@ -11,7 +11,7 @@ use Symfony\Component\HttpKernel\KernelEvents;
 
 class OnlineSubscriber implements EventSubscriberInterface
 {
-    const UPDATE_TIME = 30 ;
+    public const UPDATE_TIME = 30 ;
     protected $online ;
     protected $onlineRepository ;
     protected $manager ;

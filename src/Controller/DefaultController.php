@@ -19,9 +19,7 @@ use Symfony\Component\Serializer\SerializerInterface;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/_embed_accept_cookies", name="app_embed_accept_cookies")
-     */
+    #[Route(path: '/_embed_accept_cookies', name: 'app_embed_accept_cookies')]
     public function acceptCookies(Request $request)
     {
         if ($request->query->get('acceptCookie')) {
@@ -53,10 +51,8 @@ class DefaultController extends AbstractController
     }
 
 
-    /**
-     * @Route("/", name="app_home")
-     */
-    public function index(Request $request, CurrencyRepository $currencyRepository)
+    #[Route(path: '/', name: 'app_home')]
+    public function index(CurrencyRepository $currencyRepository)
     {
         $currency = $currencyRepository->findAll();
         return $this->render('default/index.html.twig', [
@@ -65,9 +61,7 @@ class DefaultController extends AbstractController
         ]);
     }
 
-    /**
-     * @Route("/_embed_newsletter/add", name="app_embed_newsletters_add" )
-     */
+    #[Route(path: '/_embed_newsletter/add', name: 'app_embed_newsletters_add')]
     public function embedNewsletter(Request $request)
     {
         $newsletter = new Newsletters() ;
@@ -100,10 +94,7 @@ class DefaultController extends AbstractController
         ]) ;
     }
 
-    /**
-     * @Route("/currency/all", name="app_currency_all")
-     */
-
+    #[Route(path: '/currency/all', name: 'app_currency_all')]
     public function allCurrency(SerializerInterface $serializer, CurrencyRepository $currencyRepository)
     {
         $data = $currencyRepository->findAll();
@@ -122,9 +113,7 @@ class DefaultController extends AbstractController
         ], Response::HTTP_OK);
     }
 
-    /**
-     * @Route("/purchase", name="app_purchase")
-     */
+    #[Route(path: '/purchase', name: 'app_purchase')]
     public function purchase (Request $request, ObjectManager $manager, EventDispatcherInterface $eventDispatcher)
     {
         $conversion = new Conversion() ;

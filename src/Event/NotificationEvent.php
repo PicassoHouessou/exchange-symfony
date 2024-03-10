@@ -8,7 +8,7 @@ use App\Entity\Notification;
 
 class NotificationEvent
 {
-    const NOTIFICATION_ADD = "notification.add";
+    public const NOTIFICATION_ADD = "notification.add";
 
     protected $notification ;
 

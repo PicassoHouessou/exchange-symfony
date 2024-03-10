@@ -13,10 +13,8 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class AdminController extends AbstractController
 {
-    /**
-     * @Route("/admin/dashboard", name="app_admin")
-     */
-    public function index(Request $request, OnlineRepository $onlineRepository, CurrencyRepository $currencyRepository, SessionInterface $session,  NewslettersRepository $newslettersRepository, ConversionRepository $conversionRepository )
+    #[Route(path: '/admin/dashboard', name: 'app_admin')]
+    public function index(OnlineRepository $onlineRepository, CurrencyRepository $currencyRepository, SessionInterface $session,  NewslettersRepository $newslettersRepository, ConversionRepository $conversionRepository )
     {
         $session->set('app_menu_open', "MENU_DASHBOARD_GENERAL");
         $session->set('app_sub_menu_active', "MENU_DASHBOARD_GENERAL");

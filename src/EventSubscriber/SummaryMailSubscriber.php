@@ -14,23 +14,19 @@ use Twig\Environment;
 class SummaryMailSubscriber implements EventSubscriberInterface
 {
     protected $mailer;
-    protected $sender;
     protected $twig;
-    protected $supportEmail;
 
-    public function __construct(MailerInterface $mailer, $noreplyEmail, $supportEmail, Environment $twig)
+    public function __construct(MailerInterface $mailer, protected $noreplyEmail, protected $supportEmail, Environment $twig)
     {
         $this->mailer = $mailer;
-        $this->sender = $noreplyEmail;
         $this->twig = $twig;
-        $this->supportEmail = $supportEmail;
     }
 
     public function onNewsletterAdd(NewslettersEvent $event)
     {
 
         $email = (new TemplatedEmail())
-            ->from($this->sender)
+            ->from($this->noreplyEmail)
             ->to($event->getNewsletters()->getEmail())
             ->subject('Newsletters registration success')
 
@@ -45,7 +41,7 @@ class SummaryMailSubscriber implements EventSubscriberInterface
     {
 
         $email = (new TemplatedEmail())
-            ->from($this->sender)
+            ->from($this->noreplyEmail)
             ->to($event->getUser()->getEmail())
             ->subject('Your verification code')
 
@@ -69,7 +65,7 @@ class SummaryMailSubscriber implements EventSubscriberInterface
         $conversion = $event->getConversion();
         $email =
             (new TemplatedEmail())
-                ->from($this->sender)
+                ->from($this->noreplyEmail)
                 ->to($conversion->getEmail())
                 ->subject("Demande d'échange de devises")
 
@@ -84,7 +80,7 @@ class SummaryMailSubscriber implements EventSubscriberInterface
         /*
         $conversion = $event->getConversion() ;
         $message = (new \Swift_Message(" Demande d'échange de devises"))
-            ->setFrom($this->sender)
+            ->setFrom($this->noreplyEmail)
             ->setTo($conversion->getEmail())
             ->setBody(
                 $this->twig->render(
@@ -107,7 +103,7 @@ class SummaryMailSubscriber implements EventSubscriberInterface
     {
         // TODO: Implement getSubscribedEvents() method.
         return [
-            //UserEvent::NEW_USER                 => 'onUserAdd',
+                //UserEvent::NEW_USER                 => 'onUserAdd',
             NewslettersEvent::NEWSLETTERS_ADD => 'onNewsletterAdd',
             ConversionEvent::CONVERSION_REQUEST => 'onConversionDo',
 

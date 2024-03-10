@@ -6,29 +6,21 @@ use App\Repository\NewslettersRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
-/**
- * @ORM\Entity(repositoryClass=NewslettersRepository::class)
- */
+#[ORM\Entity(repositoryClass: NewslettersRepository::class)]
 class Newsletters
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotNull()
-     * @Assert\Email()
-     * @Assert\NotBlank()
-     */
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
+    #[Assert\NotNull]
+    #[Assert\Email]
+    #[Assert\NotBlank]
     private $email;
 
-    /**
-     * @ORM\Column(type="datetime" , length=50)
-     */
+    #[ORM\Column(type: 'datetime', length: 50)]
     private $createdAt;
 
     public function getId(): ?int

@@ -13,18 +13,8 @@ use Twig\Environment;
 
 class EmailVerifier
 {
-    private $verifyEmailHelper;
-    private $mailer;
-    private $entityManager;
-
-    private  $twig;
-
-    public function __construct(VerifyEmailHelperInterface $helper, MailerInterface $mailer, Environment $twig, EntityManagerInterface $manager)
+    public function __construct(private readonly VerifyEmailHelperInterface $verifyEmailHelper, private readonly MailerInterface $mailer, private readonly Environment $twig, private readonly EntityManagerInterface $entityManager)
     {
-        $this->verifyEmailHelper = $helper;
-        $this->mailer = $mailer;
-        $this->entityManager = $manager;
-        $this->twig = $twig ;
     }
 
     public function sendEmailConfirmation(string $verifyEmailRouteName, UserInterface $user, TemplatedEmail $email): void

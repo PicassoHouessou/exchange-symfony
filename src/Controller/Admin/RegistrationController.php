@@ -18,10 +18,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class RegistrationController extends AbstractController
 {
-    /**
-     * @Route("/admin/registration", name="app_admin_register")
-     */
-
+    #[Route(path: '/admin/registration', name: 'app_admin_register')]
     public function registration( Request $request, UserPasswordHasherInterface $passwordHasher,  AdminLoginFormAuthenticator $authenticator , SessionInterface $session, EmailVerifier $emailVerifier)
     {
         $admin = new Admin();

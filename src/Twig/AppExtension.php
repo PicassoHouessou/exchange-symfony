@@ -30,7 +30,7 @@ class AppExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('app_upload_asset', [$this, 'uploadAsset']),
+            new TwigFunction('app_upload_asset', $this->uploadAsset(...)),
         ];
     }
 

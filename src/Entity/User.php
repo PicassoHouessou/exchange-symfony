@@ -12,69 +12,43 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
 
-/**
- * @ORM\Entity(repositoryClass=UserRepository::class)
- * @UniqueEntity(
- *     fields={"email"},
- *     message="This email exists"
- * )
- */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[UniqueEntity(fields: ['email'], message: 'This email exists')]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
-    /**
-     * @ORM\Id
-     * @ORM\GeneratedValue
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\Email(message="Please enter your email")
-     * @Assert\NotNull()
-     */
+    #[ORM\Column(type: 'string', length: 100, unique: true)]
+    #[Assert\Email(message: 'Please enter your email')]
+    #[Assert\NotNull]
     private $email;
 
-    /**
-     * @ORM\Column(type="string", length=210)
-     * @Assert\Length(min="8", max="210")
-     * Assert\NotNull(message="Please enter a password")
-     */
+    #[ORM\Column(type: 'string', length: 210)]
+    #[Assert\Length(min: '8', max: '210')] // Assert\NotNull(message="Please enter a password")
     private $password;
 
-    /**
-     * @ORM\OneToOne(targetEntity=UserInfo::class, inversedBy="user", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToOne(targetEntity: UserInfo::class, inversedBy: 'user', cascade: ['persist', 'remove'])]
     private $info;
 
-    /**
-     * @ORM\Column(type="datetime")
-     */
+    #[ORM\Column(type: 'datetime')]
     private $createdAt;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     private $updatedAt;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     private $roles = [];
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $isEnabled;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Notification::class, mappedBy="user")
-     */
+    #[ORM\OneToMany(targetEntity: Notification::class, mappedBy: 'user')]
     private $notifications;
 
 

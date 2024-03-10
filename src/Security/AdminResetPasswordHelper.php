@@ -22,29 +22,17 @@ class AdminResetPasswordHelper //implements ResetPasswordHelperInterface
      * The first 20 characters of the token are a "selector".
      */
     private const SELECTOR_LENGTH = 20;
-    //private const $resetRequestLifetime = , int $requestThrottleTime
-
-    private $tokenGenerator;
-    private $resetPasswordCleaner;
     private $repository;
 
-    /**
+    public function __construct(private readonly ResetPasswordTokenGenerator $tokenGenerator, private readonly ResetPasswordCleaner $resetPasswordCleaner, ResetAdminPasswordRequestRepository $repository, /**
      * @var int How long a token is valid in seconds
      */
-    private $resetRequestLifetime;
-
-    /**
+    private readonly int $resetRequestLifetime, /**
      * @var int Another password reset cannot be made faster than this throttle time in seconds
      */
-    private $requestThrottleTime;
-
-    public function __construct(ResetPasswordTokenGenerator $generator, ResetPasswordCleaner $cleaner, ResetAdminPasswordRequestRepository $repository, int $resetRequestLifetime, int $requestThrottleTime)
+    private readonly int $requestThrottleTime)
     {
-        $this->tokenGenerator = $generator;
-        $this->resetPasswordCleaner = $cleaner;
         $this->repository = $repository;
-        $this->resetRequestLifetime = $resetRequestLifetime;
-        $this->requestThrottleTime = $requestThrottleTime;
     }
 
     /**
