@@ -5,10 +5,10 @@ namespace App\Entity;
 use App\Repository\AdminRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
@@ -17,7 +17,7 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
  */
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'This login exists')]
-class Admin implements UserInterface,PasswordAuthenticatedUserInterface
+class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
 
     static $ROLES_DEFINED =
@@ -82,20 +82,12 @@ class Admin implements UserInterface,PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    /**
-     * A visual identifier that represents this user.
-     *
-     * @see UserInterface
-     */
-    public function getUsername(): string
-    {
-        return (string) $this->email;
-    }
 
     public function getUserIdentifier(): string
     {
-        return (string) $this->email;
+        return (string)$this->email;
     }
+
     /**
      * @see UserInterface
      */
@@ -123,7 +115,6 @@ class Admin implements UserInterface,PasswordAuthenticatedUserInterface
         return substr_replace(implode(', ', $chain), '', -2, 0);
 
 
-
     }
 
     public function setRoles(array $roles): self
@@ -138,7 +129,7 @@ class Admin implements UserInterface,PasswordAuthenticatedUserInterface
      */
     public function getPassword(): ?string
     {
-        return (string) $this->password;
+        return (string)$this->password;
     }
 
     public function setPassword(?string $password): self
@@ -146,23 +137,6 @@ class Admin implements UserInterface,PasswordAuthenticatedUserInterface
         $this->password = $password;
 
         return $this;
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function getSalt()
-    {
-        // not needed when using the "bcrypt" algorithm in security.yaml
-    }
-
-    /**
-     * @see UserInterface
-     */
-    public function eraseCredentials()
-    {
-        // If you store any temporary, sensitive data on the user, clear it here
-        // $this->plainPassword = null;
     }
 
     public function getFullName(): ?string
